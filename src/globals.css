@@ -1,0 +1,132 @@
+:root {
+    --primary-land-green: #2a403b;
+    --primary-misty-green: #9eae9e;
+    --primary-sand-brown: #f2e9dc;
+
+    --secondary-tree-green: #378c36;
+    --secondary-sunset-orange: #e6692e;
+    --secondary-sky-blue: #09a3ba;
+    --secondary-sun-yellow: #edb00d;
+    --secondary-grass-green: #a3b72a;
+    --secondary-sun-orange: #f5a14c;
+    --secondary-rain-blue: #84bfbf;
+    --secondary-wheat-yellow: #fad65d;
+
+    --tertiary-night-blue: #1c4971;
+    --tertiary-water-blue: #5ba0c7;
+    --tertiary-fire-red: #e84b27;
+    --tertiary-health-pink: #f29ba6;
+}
+
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-Thin.otf');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-ThinItalic.otf');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-ExtraLight.otf');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-ExtraLightItalic.otf');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-Light.otf');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-LightItalic.otf');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-Regular.otf');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-RegularItalic.otf');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-Medium.otf');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-MediumItalic.otf');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-SemiBold.otf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-SemiBoldItalic.otf');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-Bold.otf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-BoldItalic.otf');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-Black.otf');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Silka";
+    src: url('../public/fonts/Silka-BlackItalic.otf');
+    font-weight: 900;
+    font-style: italic;
+}

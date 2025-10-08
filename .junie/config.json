@@ -1,0 +1,6 @@
+{
+  "fileNaming": {
+    "pattern": "kebab-case",
+    "extensions": [".ts", ".tsx", ".js", ".jsx"]
+  }
+}
