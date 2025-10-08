@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { RiskLevel } from '../../../properties/services/models/property-model.ts';
 
 export const VisitModel = z.object({
   id: z.string(),
@@ -24,7 +25,8 @@ export const VisitModel = z.object({
     id: z.string(),
     name: z.string(),
     cph: z.string().optional().nullable(),
-    riskLevel: z.enum(['High', 'Medium', 'Low', 'None']).optional().nullable(),
+    // riskLevel: z.enum(['High', 'Medium', 'Low', 'None']).optional().nullable(),
+    riskLevel: z.nativeEnum(RiskLevel).default(RiskLevel.None),
     whatThreeWords: z.string(),
     location: z.object({
       latitude: z.number(),

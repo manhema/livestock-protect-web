@@ -14,6 +14,11 @@ import { AccessProtectByPropertyIdPage } from './pages/access-protect/[propertyI
 import {
   AccessProtectVisitsByPropertyIdPage,
 } from './pages/access-protect/[propertyId]/visits/visits-by-property-id-page.tsx';
+import { AccessProtectPropertiesPage } from './pages/access-protect/properties/access-protect-properties-page.tsx';
+import {
+  VisitsPage,
+} from './pages/access-protect/properties/[propertyId]/visits/visits-page.tsx';
+import { VisitPage } from './pages/access-protect/properties/[propertyId]/visits/[visitId]/visit-page.tsx';
 
 const ProtectedAppLayout = () => {
   return (
@@ -42,6 +47,10 @@ export const AppRoutes = () => {
           <Route index path="/access/protect/:propertyId/visits" element={<AccessProtectVisitsByPropertyIdPage />} />
 
 
+          <Route index path="/access/protect/properties" element={<AccessProtectPropertiesPage />} />
+
+          <Route index path="/access/protect/properties/:propertyId/visits" element={<VisitsPage />} />
+          <Route index path="/access/protect/properties/:propertyId/visits/:visitId" element={<VisitPage />} />
 
           <Route index path="/contingency-planning/ebas" element={<ElectronicBiosecurityAssessmentPage />} />
           <Route index path="/reports" element={<ReportsPage />} />

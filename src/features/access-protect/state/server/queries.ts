@@ -4,6 +4,15 @@ import type { DateTimeRange } from '../../types';
 
 const datasource = new AccessProtectServices();
 
+export const useQueryAccessProtectProperties = (organizationId: string) => {
+  return useQuery({
+    queryKey: ['queryAccessProtectProperties', organizationId],
+    queryFn: async () => {
+      return await datasource.getAccessProtectProperties(organizationId);
+    },
+  });
+};
+
 export const useQueryOrganizationMovements = (range: DateTimeRange, filter?: IMovementsFilter) => {
   return useQuery({
     queryKey: ['queryOrganizationMovements', range, filter],

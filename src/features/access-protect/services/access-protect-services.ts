@@ -3,6 +3,7 @@ import { _get, _post } from '../../../core/services/api/api-client.ts';
 import { MovementFilterRequest } from '../types/requests.ts';
 import type { DateTimeRange } from '../types';
 import { VisitModel } from './models/visit-model.ts';
+import { PropertyModel } from '../../properties/services/models/property-model.ts';
 
 export interface IVisitorFilter {
   name: string;
@@ -33,6 +34,11 @@ export class AccessProtectServices {
     return MovementFilterRequest.parse(data);
   };
 
+  getAccessProtectProperties = async (organizationId: string): Promise<PropertyModel[]> => {
+    const response = await _get(`/accessprotect/api/v1/organizations/${organizationId}/properties`);
+    return response['data'].map((value: any) => PropertyModel.parse(value));
+  };
+
   getOrganizationMovements = async (range: DateTimeRange, filter?: IMovementsFilter) : Promise<MovementReport> => {
     const request = this.constructFilters(range, filter);
     const response = await _post('/accessprotect/api/v1/movements', request);
@@ -50,12 +56,25 @@ export class AccessProtectServices {
   };
 
   getVisitsByPropertyId = async (organizationId: string, propertyId: string) : Promise<VisitModel[]> => {
-    const response = await _get(`/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs`);
+    const response = await _get(
+      `/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs`,
+      {
+        headers: {
+          'x-organization-id': organizationId,
+        },
+      });
     return response['data'].map((value: any) => VisitModel.parse(value));
   };
 
   getVisit = async (organizationId: string, propertyId: string, visitId: string) : Promise<VisitModel> => {
-    const response = await _get(`/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs/${visitId}`);
+    const response = await _get(
+      `/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs/${visitId}`,
+      {
+        headers: {
+          'x-organization-id': organizationId,
+        },
+      });
+
     return VisitModel.parse(response['data']);
   };
 }

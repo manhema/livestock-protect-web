@@ -16,9 +16,9 @@ export const PropertyModel = z.object({
   id: z.string(),
   name: z.string(),
   cph: z.string().optional().nullable(),
-  livestockTypes: z.array(z.string()),
+  livestockTypes: z.array(z.string()).optional(),
   riskLevel: z.nativeEnum(RiskLevel),
-  enabled: z.boolean(),
+  enabled: z.boolean().optional(),
   whatThreeWords: z.string(),
   location: z.object({
     latitude: z.number(),

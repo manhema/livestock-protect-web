@@ -1,16 +1,16 @@
 import Card from '@mui/material/Card';
-import type { PropertyModel } from '../services/models/property-model.ts';
 import type { FC } from 'react';
-import { getPropertyStatusColor } from '../utils/property-helper.ts';
+import { getPropertyStatusColor } from '../../../properties/utils/property-helper.ts';
 import { Box, CardActionArea, CardContent, Stack, Tooltip, Typography } from '@mui/material';
-import StatusBadge from './badges/property-status-badge.tsx';
+import StatusBadge from '../../../properties/components/badges/property-status-badge.tsx';
 import { useNavigate } from 'react-router';
+import type { VisitModel } from '../../services/models/visit-model.ts';
 
-interface AccessProtectListItemProps {
-  property: PropertyModel;
+interface VisitorListItemProps {
+  visit: VisitModel;
 }
 
-export const AccessProtectListItem : FC<AccessProtectListItemProps>= ({ property }) => {
+export const VisitorListItem : FC<VisitorListItemProps>= ({ visit }) => {
   const navigate = useNavigate();
 
   return (
@@ -22,7 +22,7 @@ export const AccessProtectListItem : FC<AccessProtectListItemProps>= ({ property
       <Card
         elevation={2}
         sx={{
-          borderLeft: `1rem solid ${getPropertyStatusColor(property?.riskLevel)} !important`,
+          borderLeft: `1rem solid ${getPropertyStatusColor(visit.property.riskLevel)} !important`,
 
           // radius: '0',
           // height: '100%',
@@ -32,7 +32,7 @@ export const AccessProtectListItem : FC<AccessProtectListItemProps>= ({ property
           borderColor: 'divider !important',
         }}
         onClick={
-          () => navigate(`/access/protect/properties/${property.id}/visits`)
+          () => navigate(`/access/protect/properties/${visit.id}/visits/${visit.id}`)
         }
       >
         <CardActionArea>
@@ -45,7 +45,7 @@ export const AccessProtectListItem : FC<AccessProtectListItemProps>= ({ property
             >
               <Box>
                 <Stack direction="row" alignItems="center" gap={1}>
-                  <Tooltip title={property.name} placement="top">
+                  <Tooltip title={visit.user.firstName} placement="top">
                     <Typography
                       variant="subtitle2"
                       data-testid="access-control-property-name"
@@ -57,7 +57,7 @@ export const AccessProtectListItem : FC<AccessProtectListItemProps>= ({ property
                         display: 'block',
                         cursor: 'pointer',
                       }}>
-                      {property.name}
+                      {`${visit.user.firstName} ${visit.user.lastName}`}
                     </Typography>
                   </Tooltip>
 
@@ -66,7 +66,7 @@ export const AccessProtectListItem : FC<AccessProtectListItemProps>= ({ property
               </Box>
 
               <Box>
-                <StatusBadge riskLevel={property?.riskLevel} />
+                <StatusBadge riskLevel={visit.property.riskLevel} />
               </Box>
             </Stack>
 

@@ -1,6 +1,7 @@
 import { type FC, Fragment } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -25,20 +26,33 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             to="/"
             sx={{
               minHeight: 48,
-              justifyContent: leftDrawerOpen ? 'initial' : 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               px: 2.5,
+              py: 1,
             }}
           >
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: leftDrawerOpen ? 3 : 'auto',
                 justifyContent: 'center',
               }}
             >
               <HomeIcon/>
             </ListItemIcon>
-            <ListItemText primary="Home" sx={{ opacity: leftDrawerOpen ? 1 : 0 }}/>
+            <ListItemText
+              primary="Home"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
 
@@ -49,20 +63,33 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             to="/properties"
             sx={{
               minHeight: 48,
-              justifyContent: leftDrawerOpen ? 'initial' : 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               px: 2.5,
+              py: 1,
             }}
           >
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: leftDrawerOpen ? 3 : 'auto',
                 justifyContent: 'center',
               }}
             >
               <PropertiesIcon/>
             </ListItemIcon>
-            <ListItemText primary="Properties" sx={{ opacity: leftDrawerOpen ? 1 : 0 }}/>
+            <ListItemText
+              primary="Properties"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
 
@@ -73,20 +100,33 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             to="/operations"
             sx={{
               minHeight: 48,
-              justifyContent: leftDrawerOpen ? 'initial' : 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               px: 2.5,
+              py: 1,
             }}
           >
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: leftDrawerOpen ? 3 : 'auto',
                 justifyContent: 'center',
               }}
             >
               <OperationsIcon/>
             </ListItemIcon>
-            <ListItemText primary="Operations" sx={{ opacity: leftDrawerOpen ? 1 : 0 }}/>
+            <ListItemText
+              primary="Operations"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
 
@@ -97,20 +137,71 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             to="/access/protect"
             sx={{
               minHeight: 48,
-              justifyContent: leftDrawerOpen ? 'initial' : 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               px: 2.5,
+              py: 1,
             }}
           >
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: leftDrawerOpen ? 3 : 'auto',
                 justifyContent: 'center',
               }}
             >
               <AccessControlIcon/>
             </ListItemIcon>
-            <ListItemText primary="AccessProtect" sx={{ opacity: leftDrawerOpen ? 1 : 0 }}/>
+            <ListItemText
+              primary="Access Protect"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        {/*<Divider />*/}
+        <Divider />
+        <ListItem key="properties" disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            component={Link}
+            to="access/protect/properties"
+            sx={{
+              minHeight: 48,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              px: 2.5,
+              py: 1,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                justifyContent: 'center',
+              }}
+            >
+              <PropertiesIcon/>
+            </ListItemIcon>
+            <ListItemText
+              primary="Properties"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
 
@@ -121,20 +212,33 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             to="/contingency-planning/ebas"
             sx={{
               minHeight: 48,
-              justifyContent: leftDrawerOpen ? 'initial' : 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               px: 2.5,
+              py: 1,
             }}
           >
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: leftDrawerOpen ? 3 : 'auto',
                 justifyContent: 'center',
               }}
             >
               <ContingencyPlanIcon/>
             </ListItemIcon>
-            <ListItemText primary="Contingency Planning" sx={{ opacity: leftDrawerOpen ? 1 : 0 }}/>
+            <ListItemText
+              primary="Contingency Planning"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
 
@@ -145,20 +249,33 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             to="/reports"
             sx={{
               minHeight: 48,
-              justifyContent: leftDrawerOpen ? 'initial' : 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               px: 2.5,
+              py: 1,
             }}
           >
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: leftDrawerOpen ? 3 : 'auto',
                 justifyContent: 'center',
               }}
             >
               <ReportIcon color="error"/>
             </ListItemIcon>
-            <ListItemText primary="Reports" sx={{ opacity: leftDrawerOpen ? 1 : 0 }}/>
+            <ListItemText
+              primary="Reports"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
       </List>

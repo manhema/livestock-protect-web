@@ -1,0 +1,52 @@
+import { Fragment } from 'react';
+import { AccessProtectListItem } from '../../../../features/properties/components/access-protect-list-item.tsx';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { BasicBreadcrumbs } from '../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
+import { useQueryAccessProtectProperties } from '../../../../features/access-protect/state/server';
+
+export const AccessProtectPropertiesPage = () => {
+  const organizationId = '08dd6d6a-fb22-a96e-fdb3-b20335000001';
+
+  const { isLoading, error, data } = useQueryAccessProtectProperties(organizationId);
+
+  if (isLoading)
+    return <Box>Loading...</Box>;
+
+  if (error)
+    return <Box>{JSON.stringify(error)}</Box>;
+
+  if (data) {
+    return (
+      <Box>
+        <BasicBreadcrumbs/>
+
+        <Container
+          // maxWidth="xl"
+          disableGutters={true}
+          maxWidth={false}
+          sx={{ p:2 }}
+        >
+          Properties {data.length}
+          <Grid container spacing={2}>
+            {
+              data.map((property) => (
+                <Grid key={property.id} size={{ sm: 12, md: 12, lg: 12, xl: 12 }}>
+                  {/*<Grid key={property.id} size={{ sm: 6, md: 4, lg: 4, xl: 4 }}>*/}
+                  <AccessProtectListItem key={property.id} property={property}/>
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Container>
+      </Box>
+    );
+  }
+
+  return (
+    <Fragment>
+      Nothing
+    </Fragment>
+  );
+};
