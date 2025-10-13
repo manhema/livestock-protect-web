@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import { useParams } from 'react-router';
 import { useQueryVisitsByPropertyId } from '../../../../../../features/access-protect/state/server';
 import { BasicBreadcrumbs } from '../../../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
-import { VisitsTable } from '../../../../../../features/access-protect/components/visits/visits-table.tsx';
 import { VisitorListItem } from '../../../../../../features/access-protect/components/visits/visitor-list-item.tsx';
 
 export const VisitsPage = () => {
@@ -25,13 +24,10 @@ export const VisitsPage = () => {
         <BasicBreadcrumbs/>
 
         <Container
-          // maxWidth="xl"
           disableGutters={true}
           maxWidth={false}
           sx={{ p:2 }}
         >
-          Properties {data.length}
-          <VisitsTable visits={data} />
           {
             data.map((visit) => (
               <VisitorListItem key={visit.id} visit={visit}/>

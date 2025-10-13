@@ -5,6 +5,8 @@ import { Box, CardActionArea, CardContent, Stack, Tooltip, Typography } from '@m
 import StatusBadge from '../../../properties/components/badges/property-status-badge.tsx';
 import { useNavigate } from 'react-router';
 import type { VisitModel } from '../../services/models/visit-model.ts';
+import { CheckedInChip } from './checked-in-chip.tsx';
+import Divider from '@mui/material/Divider';
 
 interface VisitorListItemProps {
   visit: VisitModel;
@@ -23,12 +25,6 @@ export const VisitorListItem : FC<VisitorListItemProps>= ({ visit }) => {
         elevation={2}
         sx={{
           borderLeft: `1rem solid ${getPropertyStatusColor(visit.property.riskLevel)} !important`,
-
-          // radius: '0',
-          // height: '100%',
-          // display: 'flex',
-          // flexDirection: 'column',
-          // backgroundColor: 'white',
           borderColor: 'divider !important',
         }}
         onClick={
@@ -37,6 +33,8 @@ export const VisitorListItem : FC<VisitorListItemProps>= ({ visit }) => {
       >
         <CardActionArea>
           <CardContent>
+            <CheckedInChip visit={visit} datetime={visit.visitedAt} />
+            <Divider sx={{ my:1 }} />
             <Stack
               direction="row"
               justifyContent="space-between"

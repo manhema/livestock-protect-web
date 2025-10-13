@@ -50,6 +50,22 @@ export const VisitModel = z.object({
       }).optional().nullable(),
     }).optional().nullable(),
   }),
+  unit: z.object({
+    name: z.string(),
+    whatThreeWords: z.string().optional().nullable(),
+    location: z.object({
+      latitude: z.number(),
+      longitude: z.number(),
+    }).optional().nullable(),
+  }).optional().nullable(),
+  area: z.object({
+    name: z.string(),
+    whatThreeWords: z.string().optional().nullable(),
+    location: z.object({
+      latitude: z.number(),
+      longitude: z.number(),
+    }).optional().nullable(),
+  }).optional().nullable(),
   visitedAt: z.string(),
   leftAt: z.string().optional().nullable(),
 
