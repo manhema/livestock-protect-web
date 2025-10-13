@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
-import {
-  AccessProtectMovementsMap,
-} from '../../../../features/access-protect/components/maps/access-protect-movements-map.tsx';
-import { useQueryOrganizationMovementsByPropertyId } from '../../../../features/access-protect/state/server';
-import type { IMovementsFilter } from '../../../../features/access-protect/services/access-protect-services.ts';
+import { useQueryOrganizationMovementsByPropertyId } from '../../../../../features/access-protect/state/server';
+import type { IMovementsFilter } from '../../../../../features/access-protect/services/access-protect-services.ts';
 import { useParams } from 'react-router';
+import {
+  AccessProtectMovements,
+} from '../../../../../features/access-protect/components/maps/access-protect-movements.tsx';
 
 
-export const AccessProtectByPropertyIdPage = () => {
+export const MovementsByPropertyIdPage = () => {
   const { propertyId } = useParams();
 
   const [range, setRange] = useState<[Dayjs | null, Dayjs | null]>([dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')]);
@@ -21,7 +21,7 @@ export const AccessProtectByPropertyIdPage = () => {
     return <Box>{JSON.stringify(error)} - {propertyId}</Box>;
 
   return(
-    <AccessProtectMovementsMap
+    <AccessProtectMovements
       propertyId={propertyId}
       isLoading={isLoading}
       movements={data}

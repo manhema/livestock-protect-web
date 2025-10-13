@@ -32,7 +32,7 @@ export const VisitorListItem : FC<VisitorListItemProps>= ({ visit }) => {
           borderColor: 'divider !important',
         }}
         onClick={
-          () => navigate(`/access/protect/properties/${visit.id}/visits/${visit.id}`)
+          () => navigate(`/access/protect/properties/${visit.property.id}/visits/${visit.id}`)
         }
       >
         <CardActionArea>

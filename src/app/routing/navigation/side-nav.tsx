@@ -10,7 +10,7 @@ import { Link } from 'react-router';
 import { ContingencyPlanIcon, OperationsIcon, PropertiesIcon } from '../../../core/utils/icons/icons.tsx';
 import AccessControlIcon from '../../../core/utils/icons/access-control-icon.tsx';
 import { Report as ReportIcon } from '@mui/icons-material';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
 interface SideNavProps {
   leftDrawerOpen: boolean;
 }
@@ -168,8 +168,44 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
         </ListItem>
 
         {/*<Divider />*/}
-        <Divider />
-        <ListItem key="properties" disablePadding sx={{ display: 'block' }}>
+        <Divider sx={{ my:1 }}/>
+        <ListItem key="access-protect/dashboard" disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            component={Link}
+            to="access/protect/dashboard"
+            sx={{
+              minHeight: 48,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              px: 2.5,
+              py: 1,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                justifyContent: 'center',
+              }}
+            >
+              <DashboardIcon/>
+            </ListItemIcon>
+            <ListItemText
+              primary="Dashboard"
+              sx={{
+                opacity: leftDrawerOpen ? 1 : 0,
+                mt: 0.5,
+                '& .MuiTypography-root': {
+                  fontSize: '0.65rem',
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                },
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
           <ListItemButton
             component={Link}
             to="access/protect/properties"
@@ -205,6 +241,7 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
           </ListItemButton>
         </ListItem>
 
+        <Divider sx={{ my:1 }}/>
         {/* ContingencyPlanning */}
         <ListItem key="ebas" disablePadding sx={{ display: 'block' }}>
           <ListItemButton

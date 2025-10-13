@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
-import { useQueryOrganizationMovements } from '../../../features/access-protect/state/server';
-import {
-  AccessProtectMovementsMap,
-} from '../../../features/access-protect/components/maps/access-protect-movements-map.tsx';
-import type { IMovementsFilter } from '../../../features/access-protect/services/access-protect-services.ts';
+import { useQueryOrganizationMovements } from '../../../../features/access-protect/state/server';
+import type { IMovementsFilter } from '../../../../features/access-protect/services/access-protect-services.ts';
+import { AccessProtectMovements } from '../../../../features/access-protect/components/maps/access-protect-movements.tsx';
 
 
-export const AccessProtectPage = () => {
+export const MovementsPage = () => {
   const [range, setRange] = useState<[Dayjs | null, Dayjs | null]>([dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')]);
   const [filter, setFilter] = useState<IMovementsFilter | undefined>();
 
@@ -18,7 +16,7 @@ export const AccessProtectPage = () => {
     return <Box>{JSON.stringify(error)}</Box>;
 
   return(
-    <AccessProtectMovementsMap
+    <AccessProtectMovements
       isLoading={isLoading}
       movements={data}
       range={range}
