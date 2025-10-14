@@ -1,61 +1,57 @@
 import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
-import { Alert, Box, Container, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, Container, Stack, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import dayjs, { Dayjs } from 'dayjs';
-import { type FC, useState } from 'react';
+import { type FC, Fragment, useState } from 'react';
 import {
   LocationStatsCard,
-} from '../../../../../features/access-protect/components/dashboard/cards/location-stats-card.tsx';
-import { ReasonStatsCard } from '../../../../../features/access-protect/components/dashboard/cards/reason-stats-card.tsx';
-import { SummaryStatistics } from '../../../../../features/access-protect/components/dashboard/summary-statistics.tsx';
-import { DateRangePicker } from '../../../../../features/access-protect/components/date-range-picker.tsx';
+} from '../../../features/access-protect/components/dashboard/cards/location-stats-card.tsx';
+import { ReasonStatsCard } from '../../../features/access-protect/components/dashboard/cards/reason-stats-card.tsx';
+import { SummaryStatistics } from '../../../features/access-protect/components/dashboard/summary-statistics.tsx';
+import { DateRangePicker } from '../../../features/access-protect/components/date-range-picker.tsx';
 import {
   AccessProtectMovementsMap,
-} from '../../../../../features/access-protect/components/maps/access-protect-movements-map.tsx';
-import { MovementsFilterPanel } from '../../../../../features/access-protect/components/maps/map-controls/movements-filter-panel.tsx';
-import type { IMovementsFilter } from '../../../../../features/access-protect/services/access-protect-services.ts';
-import type { MovementReport } from '../../../../../features/access-protect/services/models/movement-report-model.ts';
-import { useQueryOrganizationMovementsByPropertyId } from '../../../../../features/access-protect/state/server';
+} from '../../../features/access-protect/components/maps/access-protect-movements-map.tsx';
+import {
+  MovementsFilterPanel,
+} from '../../../features/access-protect/components/maps/map-controls/movements-filter-panel.tsx';
+import type { IMovementsFilter } from '../../../features/access-protect/services/access-protect-services.ts';
+import type { MovementReport } from '../../../features/access-protect/services/models/movement-report-model.ts';
+import {
+  useQueryAccessProtectProperties,
+  useQueryOrganizationMovements,
+} from '../../../features/access-protect/state/server';
 import {
   DailyTrafficStatsCard,
-} from '../../../../../features/access-protect/components/dashboard/cards/traffic/daily-traffic-stats-card.tsx';
+} from '../../../features/access-protect/components/dashboard/cards/traffic/daily-traffic-stats-card.tsx';
 import {
   HourlyTrafficStatsCard,
-} from '../../../../../features/access-protect/components/dashboard/cards/traffic/hourly-traffic-stats-card.tsx';
-import { BasicBreadcrumbs } from '../../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
-import { useParams } from 'react-router';
+} from '../../../features/access-protect/components/dashboard/cards/traffic/hourly-traffic-stats-card.tsx';
+import { useOrganizationStore } from '../../../features/user-management/state/client/store.ts';
+import type { PropertyModel } from '../../../features/properties/services/models/property-model.ts';
+import {
+  type IPropertyOptionsFilter,
+  PropertyDrillDownFilter,
+} from '../../../features/access-protect/components/visits/forms/property-drill-down-filter.tsx';
 
-
-export const AccessProtectDashboardByPropertyIdPage = () => {
-  const { propertyId } = useParams();
-
+interface AccessProtectDashboardProps {
+  properties: PropertyModel[];
+}
+const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [range, setRange] = useState<[Dayjs | null, Dayjs | null]>([dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')]);
   const [filter, setFilter] = useState<IMovementsFilter | undefined>();
+  const [options, setOptions] = useState<IPropertyOptionsFilter | undefined>();
 
-  const { isLoading, error, data: movements } = useQueryOrganizationMovementsByPropertyId(propertyId as string, range, filter);
+  const { isLoading, error, data: movements } = useQueryOrganizationMovements(range, filter, options);
 
   return (
     <Box>
-      <BasicBreadcrumbs
-        label={'Property'}
-        links={[
-          {
-            name: 'AP',
-            href: '/access/protect/dashboard',
-          },
-          {
-            name: 'Properties',
-            href: '/access/protect/properties',
-          },
-        ]}
-      />
-
       <Container
         disableGutters={true}
         maxWidth={false}
@@ -79,12 +75,27 @@ export const AccessProtectDashboardByPropertyIdPage = () => {
               <Grid size={{ sm: 3, md: 3 }}>
                 <DateRangePicker value={range} onChange={setRange} />
               </Grid>
-              <Grid size={{ sm: 5, md: 5 }}>
-              </Grid>
               <Grid
-                size={{ sm: 4, md: 4 }}
+                size={{ sm: 9, md: 9 }}
                 sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
               >
+                <Button
+                  type="button"
+                  size="medium"
+                  variant="contained"
+                  sx={{ mx: 2 }}
+                  // onClick={handleOpen}
+                >
+                  Properties
+                </Button>
+                <PropertyDrillDownFilter
+                  properties={properties}
+                  options={options}
+                  onDrillDownFilter={(value) => {
+                    setOptions(value);
+                    setFilter(undefined);
+                  }}
+                />
                 <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
                 <IconButton
                   onClick={() => {
@@ -130,6 +141,7 @@ export const AccessProtectDashboardByPropertyIdPage = () => {
                 <MovementsFilterPanel
                   visitors={movements?.visitors ?? []}
                   sites={movements?.sites ?? []}
+                  filter={filter}
                   onFilterChange={(filter) => {
                     setFilter(filter);
                   }}
@@ -196,5 +208,31 @@ const Stats: FC<StatsProps> = ({ isLoading ,  movements }) => {
       {/*end traffic*/}
 
     </Box>
+  );
+};
+
+export const AccessProtectPage = () => {
+  const { organizationId } = useOrganizationStore();
+
+  const { isLoading, error, data: properties } = useQueryAccessProtectProperties(organizationId!);
+
+  if (isLoading)
+    return <Box>Loading...</Box>;
+
+  if (error)
+    return <Box>{JSON.stringify(error)}</Box>;
+
+  if (properties) {
+    return (
+      <Box>
+        <AccessProtectDashboard properties={properties}/>
+      </Box>
+    );
+  }
+
+  return (
+    <Fragment>
+      Nothing
+    </Fragment>
   );
 };

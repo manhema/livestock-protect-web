@@ -19,19 +19,16 @@ export const useQueryOrganizations = () => {
       if (organizationId) {
         const  exists = organizations.find((org) => org.id === organizationId);
         if (exists) {
-          alert(`Organization found ${organizationId}`);
           setOrganizationId(organizationId);
         }else {
 
           const defaultOrganizationId = organizations[0].id;
-          alert(`Organization not found ${defaultOrganizationId}`);
 
           setOrganizationId(defaultOrganizationId);
           OrganizationUtil.setCurrentOrganization(defaultOrganizationId);
         }
       } else {
         const defaultOrganizationId = organizations[0].id;
-        alert(`Organization not found ${defaultOrganizationId}`);
 
         setOrganizationId(defaultOrganizationId);
         OrganizationUtil.setCurrentOrganization(defaultOrganizationId);

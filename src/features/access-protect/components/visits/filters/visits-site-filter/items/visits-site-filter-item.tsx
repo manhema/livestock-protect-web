@@ -7,10 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/material';
 import type { SiteModel } from '../../../../../services/models/site-model.ts';
 import Stack from '@mui/material/Stack';
-import FenceOutlinedIcon from '@mui/icons-material/FenceOutlined';
 import Typography from '@mui/material/Typography';
-import DoorFrontOutlinedIcon from '@mui/icons-material/DoorFrontOutlined';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Divider from '@mui/material/Divider';
 
 interface VisitsSiteFilterItemProps {

@@ -10,14 +10,13 @@ import {
 } from './pages/contingency-planning/electronic-biosecurity-assessment-page.tsx';
 import { OperationsPage } from './pages/operations/operations-page.tsx';
 import { MiniDrawerNavigation } from './routing/drawers/mini-drawer-navigation.tsx';
-import { MovementsByPropertyIdPage } from './pages/access-protect/movements/[propertyId]/movements-by-property-id-page.tsx';
+import {
+  MovementsByPropertyIdPage,
+} from './pages/access-protect/movements/[propertyId]/movements-by-property-id-page.tsx';
 import { AccessProtectPropertiesPage } from './pages/access-protect/properties/access-protect-properties-page.tsx';
 import { VisitsPage } from './pages/access-protect/properties/[propertyId]/visits/visits-page.tsx';
 import { VisitPage } from './pages/access-protect/properties/[propertyId]/visits/[visitId]/visit-page.tsx';
-import { AccessProtectDashboardPage } from './pages/access-protect/dashboard/access-protect-dashboard-page.tsx';
-import {
-  AccessProtectDashboardByPropertyIdPage,
-} from './pages/access-protect/properties/[propertyId]/access-protect-dashboard-by-property-id-page.tsx';
+import { AccessProtectPage } from './pages/access-protect/access-protect-page.tsx';
 import { OrganizationsGuard } from './routing/guards/guards/organizations-guard.tsx';
 import { PoliciesGuard } from './routing/guards/guards/policies-guard.tsx';
 
@@ -48,14 +47,12 @@ export const AppRoutes = () => {
           <Route index path="/properties" element={<PropertiesPage />} />
           <Route index path="/operations" element={<OperationsPage />} />
 
-          <Route index path="/access/protect/dashboard" element={<AccessProtectDashboardPage />} />
+          <Route index path="/access/protect/dashboard" element={<AccessProtectPage />} />
 
           <Route index path="/access/protect" element={<MovementsPage />} />
           <Route index path="/access/protect/:propertyId" element={<MovementsByPropertyIdPage />} />
 
           <Route index path="/access/protect/properties" element={<AccessProtectPropertiesPage />} />
-          <Route index path="/access/protect/properties/:propertyId" element={<AccessProtectDashboardByPropertyIdPage />} />
-
 
           <Route index path="/access/protect/properties/:propertyId/visits" element={<VisitsPage />} />
           <Route index path="/access/protect/properties/:propertyId/visits/:visitId" element={<VisitPage />} />

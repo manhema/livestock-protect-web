@@ -13,10 +13,14 @@ export const useQueryAccessProtectProperties = (organizationId: string) => {
   });
 };
 
-export const useQueryOrganizationMovements = (range: DateTimeRange, filter?: IMovementsFilter) => {
+export const useQueryOrganizationMovements = (range: DateTimeRange, filter?: IMovementsFilter, options?: { propertyId?: string }) => {
   return useQuery({
-    queryKey: ['queryOrganizationMovements', range, filter],
+    queryKey: ['queryOrganizationMovements', range, filter, options],
     queryFn: async () => {
+      if (options?.propertyId) {
+        return await datasource.getOrganizationMovementsByPropertyId(options.propertyId, range, filter);
+      }
+
       return await datasource.getOrganizationMovements(range, filter);
     },
   });

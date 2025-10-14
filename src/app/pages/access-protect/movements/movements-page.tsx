@@ -21,6 +21,7 @@ export const MovementsPage = () => {
       movements={data}
       range={range}
       setRange={setRange}
+      filter={filter}
       onFilterChange={(filter) => setFilter(filter)}
     />
   );

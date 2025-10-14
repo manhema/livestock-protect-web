@@ -11,12 +11,13 @@ import { AccessProtectMovementsMap } from './access-protect-movements-map.tsx';
 interface AccessProtectProps {
   range: DateTimeRange;
   setRange: (range: DateTimeRange) => void;
+  filter: IMovementsFilter | undefined;
   onFilterChange: (filter: IMovementsFilter | undefined) => void;
   isLoading: boolean;
   propertyId?: string;
   movements?: MovementReport;
 }
-export const AccessProtectMovements: FC<AccessProtectProps> = ({  range, setRange, onFilterChange, isLoading, movements, propertyId }) => {
+export const AccessProtectMovements: FC<AccessProtectProps> = ({  range, setRange, filter, onFilterChange, isLoading, movements, propertyId }) => {
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -52,6 +53,7 @@ export const AccessProtectMovements: FC<AccessProtectProps> = ({  range, setRang
                 <MovementsFilterPanel
                   visitors={movements?.visitors ?? []}
                   sites={movements?.sites ?? []}
+                  filter={filter}
                   onFilterChange={(filter) => {
                     onFilterChange(filter);
                   }}

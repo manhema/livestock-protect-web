@@ -17,15 +17,16 @@ interface ISelectedEntities {
 interface FilterPanelProps {
   visitors: TrackAndTraceVisitor[];
   sites: TrackAndTraceSite[];
+  filter: IMovementsFilter | undefined;
   onFilterChange: (filter: IMovementsFilter | undefined) => void;
 }
 
-export const MovementsFilterPanel: FC<FilterPanelProps> = ({ visitors, sites, onFilterChange }) => {
+export const MovementsFilterPanel: FC<FilterPanelProps> = ({ visitors, sites, filter, onFilterChange }) => {
   const [selectedEntities, setSelectedEntities] = useState<ISelectedEntities | undefined>();
 
   const [selectedVisitors, toggleVisitor, setSelectedVisitors] = useToggleSelection([]);
-  const [selectedVehicles, toggleVehicle, setSelectedVehicles] = useToggleSelection([]);
-  const [selectedSites, toggleSite, setSelectedSites] = useToggleSelection([]);
+  const [selectedVehicles, toggleVehicle, setSelectedVehicles] = useToggleSelection(filter?.vehicles ?? []);
+  const [selectedSites, toggleSite, setSelectedSites] = useToggleSelection(filter?.sites ??[]);
 
   const applyFilter = () => {
     const _visitors = visitors.filter((x) => selectedVisitors.includes(x.logId));

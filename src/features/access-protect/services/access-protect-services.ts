@@ -59,41 +59,22 @@ export class AccessProtectServices {
 
   getVisitsByPropertyId = async (organizationId: string, propertyId: string) : Promise<VisitModel[]> => {
     const response = await _get(
-      `/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs`,
-      {
-        headers: {
-          'x-organization-id': organizationId,
-        },
-      });
+      `/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs`);
     return response['data'].map((value: any) => VisitModel.parse(value));
   };
 
   getVisit = async (organizationId: string, propertyId: string, visitId: string) : Promise<VisitModel> => {
-    const response = await _get(
-      `/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs/${visitId}`,
-      {
-        headers: {
-          'x-organization-id': organizationId,
-        },
-      });
+    const response = await _get(`/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs/${visitId}`);
 
     return VisitModel.parse(response['data']);
   };
 
   getSitesByPropertyId = async (propertyId: string) : Promise<SiteModel[]> => {
-    const response = await _get(
-      `/accessprotect/api/v1/properties/${propertyId}/sites`,
-      {
-        // headers: {
-        //   'x-organization-id': organizationId,
-        // },
-      });
+    const response = await _get(`/accessprotect/api/v1/properties/${propertyId}/sites`);
     return response['data'].map((value: any) => SiteModel.parse(value));
   };
 
   async checkOutVisitor(propertyId: string, logId: string, datetime: dayjs.Dayjs): Promise<void> {
-    // '/accessprotect/powersync/api/v1/properties/${record.propertyId}/access-logs/${record.id}/checkout',
-
     const response = await _put(`/accessprotect/powersync/api/v1/properties/${propertyId}/access-logs/${logId}/checkout`,
       {
         leftAt: datetime.toISOString(),
