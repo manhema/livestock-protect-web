@@ -9,6 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Box from '@mui/material/Box';
 import { Divider, Paper } from '@mui/material';
 import { RIGHT_DRAWER_WIDTH } from '../constants.ts';
+import { SelectOrganization } from '../../../features/user-management/components/select-organization.tsx';
 
 const drawerWidth = 240;
 // const rightDrawerWidth = 300;
@@ -83,9 +84,14 @@ export const TopNav: FC<TopNavProps> = (props) => {
         >
           <MenuIcon/>
         </IconButton>
-        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center'  }}>
           <Box component="img" src="/logos/protect-icon-logo.png" alt="Protect Logo" sx={{ height: 35 }} />
         </Box>
+        <Box sx={{ ml: 3*3 }}>
+          <SelectOrganization/>
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+
         <IconButton
           color="inherit"
           edge="end"

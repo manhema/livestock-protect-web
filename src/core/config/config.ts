@@ -1,4 +1,4 @@
-import type { IApiConfig, IFirebaseConfig, IGoogleMapsApi, IW3wApi } from './config.contracts.ts';
+import type { IAccessProtect, IApiConfig, IFirebaseConfig, IGoogleMapsApi, IW3wApi } from './config.contracts.ts';
 import * as dev from './config.dev.ts';
 
 type ProtectConfig = {
@@ -6,6 +6,7 @@ type ProtectConfig = {
   firebase: IFirebaseConfig;
   googleMapsApi: IGoogleMapsApi;
   w3wApi: IW3wApi;
+  accessProtect: IAccessProtect;
 };
 
 const rawEnv = import.meta.env.VITE_APP_ENV || 'dev';
@@ -21,6 +22,7 @@ const get = (env: string): ProtectConfig => {
         firebase: dev.firebase,
         googleMapsApi: dev.googleMapsApi,
         w3wApi: dev.w3wApi,
+        accessProtect: dev.accessProtect,
       };
   }
 };

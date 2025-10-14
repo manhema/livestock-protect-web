@@ -23,3 +23,7 @@ export interface IFirebaseConfig {
   measurementId: string;
   pushNotificationToken: string;
 }
+
+export interface IAccessProtect {
+  selfServicePortalUrl: string;
+}

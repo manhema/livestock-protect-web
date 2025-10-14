@@ -10,19 +10,22 @@ import {
 import { ReasonCard } from '../../../../../../../features/access-protect/components/visits/cards/reason-card.tsx';
 import { UserCard } from '../../../../../../../features/access-protect/components/visits/cards/user-card.tsx';
 import { VehicleCard } from '../../../../../../../features/access-protect/components/visits/cards/vehicle-card.tsx';
-import { CheckedInChip } from '../../../../../../../features/access-protect/components/visits/checked-in-chip.tsx';
-import { CheckedOutChip } from '../../../../../../../features/access-protect/components/visits/checked-out-chip.tsx';
+import {
+  CheckedOutChip,
+} from '../../../../../../../features/access-protect/components/visits/chips/checked-out-chip.tsx';
 import type { VisitModel } from '../../../../../../../features/access-protect/services/models/visit-model.ts';
 import { useQueryVisit } from '../../../../../../../features/access-protect/state/server';
 import { getPropertyStatusColor } from '../../../../../../../features/properties/utils/property-helper.ts';
 import { BasicBreadcrumbs } from '../../../../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
 import Divider from '@mui/material/Divider';
+import { CheckedInRow } from '../../../../../../../features/access-protect/components/visits/checked-in-row.tsx';
+import { useOrganizationStore } from '../../../../../../../features/user-management/state/client/store.ts';
 
 export const VisitPage = () => {
-  const organizationId = '08dd6d6a-fb22-a96e-fdb3-b20335000001';
+  const { organizationId } = useOrganizationStore();
   const { propertyId, visitId } = useParams();
 
-  const { isLoading, error, data } = useQueryVisit(organizationId, propertyId as string, visitId as string);
+  const { isLoading, error, data } = useQueryVisit(organizationId!, propertyId as string, visitId as string);
 
   const checkedOutContent = (visit: VisitModel) => {
     if (visit.leftAt) {
@@ -61,7 +64,27 @@ export const VisitPage = () => {
   if (data) {
     return (
       <Box>
-        <BasicBreadcrumbs/>
+        <BasicBreadcrumbs
+          label={'Visit'}
+          links={[
+            {
+              name: 'AP',
+              href: '/access/protect/dashboard',
+            },
+            {
+              name: 'Properties',
+              href: '/access/protect/properties',
+            },
+            {
+              name: 'Property',
+              href: `/access/protect/properties/${propertyId}`,
+            },
+            {
+              name: 'Visits',
+              href: `/access/protect/properties/${propertyId}/visits`,
+            },
+          ]}
+        />
 
         <Container
           // maxWidth="xl"
@@ -78,12 +101,12 @@ export const VisitPage = () => {
                 borderColor: 'divider !important',
               }}
             >
-              <CardContent sx={{
-                // pb: '16px !important',
-                '&:last-child': { pb: 2 },
-              }}>
-                <CheckedInChip visit={data} datetime={data.visitedAt} />
-
+              <CardContent
+                sx={{
+                  '&:last-child': { pb: 2 },
+                }}
+              >
+                <CheckedInRow visit={data} />
               </CardContent>
             </Card>
           </Box>

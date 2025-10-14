@@ -5,11 +5,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { BasicBreadcrumbs } from '../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
 import { useQueryAccessProtectProperties } from '../../../../features/access-protect/state/server';
+import { useOrganizationStore } from '../../../../features/user-management/state/client/store.ts';
 
 export const AccessProtectPropertiesPage = () => {
-  const organizationId = '08dd6d6a-fb22-a96e-fdb3-b20335000001';
+  const { organizationId } = useOrganizationStore();
 
-  const { isLoading, error, data } = useQueryAccessProtectProperties(organizationId);
+  const { isLoading, error, data } = useQueryAccessProtectProperties(organizationId!);
 
   if (isLoading)
     return <Box>Loading...</Box>;
@@ -20,7 +21,13 @@ export const AccessProtectPropertiesPage = () => {
   if (data) {
     return (
       <Box>
-        <BasicBreadcrumbs/>
+        <BasicBreadcrumbs
+          label={'Properties'}
+          links={[{
+            name: 'AP',
+            href: '/access/protect/dashboard',
+          }]}
+        />
 
         <Container
           // maxWidth="xl"
@@ -29,7 +36,7 @@ export const AccessProtectPropertiesPage = () => {
           sx={{ p:2 }}
         >
           Properties {data.length}
-          <Grid container spacing={2}>
+          <Grid container spacing={0}>
             {
               data.map((property) => (
                 <Grid key={property.id} size={{ sm: 12, md: 12, lg: 12, xl: 12 }}>

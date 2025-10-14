@@ -18,7 +18,7 @@ export const PropertiesPage = () => {
   if (data) {
     return (
       <Box>
-        <BasicBreadcrumbs/>
+        <BasicBreadcrumbs links={[]} label={'Properties'}/>
 
         <Container
           // maxWidth="xl"

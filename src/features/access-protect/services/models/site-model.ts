@@ -43,6 +43,11 @@ export const SiteModel = z.object({
       longitude: z.number(),
     }).optional(),
   }).optional(),
+}).transform((site) => {
+  const areaId = site.area?.id ?? '';
+  const unitId = site.unit?.id ?? '';
+  const id = [site.type,site.property.id, areaId, unitId].filter(Boolean).join(':'); // e.g., "unit:prop123:area456:unit789" or "prop123:area456"
+  return { id, ...site };
 });
 
 

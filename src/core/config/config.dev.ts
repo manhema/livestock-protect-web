@@ -1,4 +1,4 @@
-import type { IApiConfig, IFirebaseConfig, IGoogleMapsApi, IW3wApi } from './config.contracts.ts';
+import type { IAccessProtect, IApiConfig, IFirebaseConfig, IGoogleMapsApi, IW3wApi } from './config.contracts.ts';
 
 export const api: IApiConfig = {
   gatewayUrl: 'https://lt-api-gateway-gateway-dev-ce5jg4nr.nw.gateway.dev',
@@ -26,3 +26,6 @@ export const firebase: IFirebaseConfig = {
   pushNotificationToken: 'BAsjmbXmy69jSpvRtEFWu9jCI80J1IU6ZGPgFduk9bTIspPyvnZ66JuUjrDqDhbRAOTo8ixe-G5LBPkLhVhZh3w',
 };
 
+export const accessProtect: IAccessProtect = {
+  selfServicePortalUrl: 'https://accessprotect-dev.livetecsystems.co.uk',
+};

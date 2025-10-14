@@ -3,7 +3,7 @@ import { Box, Grid, Paper } from '@mui/material';
 import type { MovementReport } from '../../services/models/movement-report-model.ts';
 import { DateRangePicker } from '../date-range-picker.tsx';
 import type { DateTimeRange } from '../../types';
-import { FilterPanel } from './map-controls/filter-panel.tsx';
+import { MovementsFilterPanel } from './map-controls/movements-filter-panel.tsx';
 import type { IMovementsFilter } from '../../services/access-protect-services.ts';
 import Divider from '@mui/material/Divider';
 import { AccessProtectMovementsMap } from './access-protect-movements-map.tsx';
@@ -49,7 +49,7 @@ export const AccessProtectMovements: FC<AccessProtectProps> = ({  range, setRang
 
               <Divider/>
               <Box sx={{ mt: 2 }}>
-                <FilterPanel
+                <MovementsFilterPanel
                   visitors={movements?.visitors ?? []}
                   sites={movements?.sites ?? []}
                   onFilterChange={(filter) => {

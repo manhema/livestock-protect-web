@@ -48,3 +48,13 @@ export const useQueryVisit = (organizationId: string, propertyId: string, visitI
     },
   });
 };
+
+export const useQuerySitesByPropertyId = (propertyId: string) => {
+  return useQuery({
+    queryKey: ['querySitesByPropertyId', propertyId],
+    queryFn: async () => {
+      return await datasource.getSitesByPropertyId( propertyId);
+    },
+  });
+};
+

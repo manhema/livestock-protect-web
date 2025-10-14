@@ -1,9 +1,11 @@
 import { MovementReport } from './models/movement-report-model.ts';
-import { _get, _post } from '../../../core/services/api/api-client.ts';
+import { _get, _post, _put } from '../../../core/services/api/api-client.ts';
 import { MovementFilterRequest } from '../types/requests.ts';
 import type { DateTimeRange } from '../types';
 import { VisitModel } from './models/visit-model.ts';
 import { PropertyModel } from '../../properties/services/models/property-model.ts';
+import  { SiteModel } from './models/site-model.ts';
+import dayjs from 'dayjs';
 
 export interface IVisitorFilter {
   name: string;
@@ -77,4 +79,32 @@ export class AccessProtectServices {
 
     return VisitModel.parse(response['data']);
   };
+
+  getSitesByPropertyId = async (propertyId: string) : Promise<SiteModel[]> => {
+    const response = await _get(
+      `/accessprotect/api/v1/properties/${propertyId}/sites`,
+      {
+        // headers: {
+        //   'x-organization-id': organizationId,
+        // },
+      });
+    return response['data'].map((value: any) => SiteModel.parse(value));
+  };
+
+  async checkOutVisitor(propertyId: string, logId: string, datetime: dayjs.Dayjs): Promise<void> {
+    // '/accessprotect/powersync/api/v1/properties/${record.propertyId}/access-logs/${record.id}/checkout',
+
+    const response = await _put(`/accessprotect/powersync/api/v1/properties/${propertyId}/access-logs/${logId}/checkout`,
+      {
+        leftAt: datetime.toISOString(),
+      },
+      {
+        headers: {
+          'x-api-key': 'AIzaSyBei7EHtYe2HSHpekR6x3F_1phGuNktF_I',
+        },
+      },
+    );
+
+    console.log(response);
+  }
 }

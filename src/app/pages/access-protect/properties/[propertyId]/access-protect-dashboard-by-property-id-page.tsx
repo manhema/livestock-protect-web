@@ -9,35 +9,53 @@ import dayjs, { Dayjs } from 'dayjs';
 import { type FC, useState } from 'react';
 import {
   LocationStatsCard,
-} from '../../../../features/access-protect/components/dashboard/cards/location-stats-card.tsx';
-import { ReasonStatsCard } from '../../../../features/access-protect/components/dashboard/cards/reason-stats-card.tsx';
-import { SummaryStatistics } from '../../../../features/access-protect/components/dashboard/summary-statistics.tsx';
-import { DateRangePicker } from '../../../../features/access-protect/components/date-range-picker.tsx';
+} from '../../../../../features/access-protect/components/dashboard/cards/location-stats-card.tsx';
+import { ReasonStatsCard } from '../../../../../features/access-protect/components/dashboard/cards/reason-stats-card.tsx';
+import { SummaryStatistics } from '../../../../../features/access-protect/components/dashboard/summary-statistics.tsx';
+import { DateRangePicker } from '../../../../../features/access-protect/components/date-range-picker.tsx';
 import {
   AccessProtectMovementsMap,
-} from '../../../../features/access-protect/components/maps/access-protect-movements-map.tsx';
-import { MovementsFilterPanel } from '../../../../features/access-protect/components/maps/map-controls/movements-filter-panel.tsx';
-import type { IMovementsFilter } from '../../../../features/access-protect/services/access-protect-services.ts';
-import type { MovementReport } from '../../../../features/access-protect/services/models/movement-report-model.ts';
-import { useQueryOrganizationMovements } from '../../../../features/access-protect/state/server';
+} from '../../../../../features/access-protect/components/maps/access-protect-movements-map.tsx';
+import { MovementsFilterPanel } from '../../../../../features/access-protect/components/maps/map-controls/movements-filter-panel.tsx';
+import type { IMovementsFilter } from '../../../../../features/access-protect/services/access-protect-services.ts';
+import type { MovementReport } from '../../../../../features/access-protect/services/models/movement-report-model.ts';
+import { useQueryOrganizationMovementsByPropertyId } from '../../../../../features/access-protect/state/server';
 import {
   DailyTrafficStatsCard,
-} from '../../../../features/access-protect/components/dashboard/cards/traffic/daily-traffic-stats-card.tsx';
+} from '../../../../../features/access-protect/components/dashboard/cards/traffic/daily-traffic-stats-card.tsx';
 import {
   HourlyTrafficStatsCard,
-} from '../../../../features/access-protect/components/dashboard/cards/traffic/hourly-traffic-stats-card.tsx';
+} from '../../../../../features/access-protect/components/dashboard/cards/traffic/hourly-traffic-stats-card.tsx';
+import { BasicBreadcrumbs } from '../../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
+import { useParams } from 'react-router';
 
 
-export const AccessProtectDashboardPage = () => {
+export const AccessProtectDashboardByPropertyIdPage = () => {
+  const { propertyId } = useParams();
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [range, setRange] = useState<[Dayjs | null, Dayjs | null]>([dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')]);
   const [filter, setFilter] = useState<IMovementsFilter | undefined>();
 
-  const { isLoading, error, data: movements } = useQueryOrganizationMovements(range, filter);
+  const { isLoading, error, data: movements } = useQueryOrganizationMovementsByPropertyId(propertyId as string, range, filter);
 
   return (
     <Box>
+      <BasicBreadcrumbs
+        label={'Property'}
+        links={[
+          {
+            name: 'AP',
+            href: '/access/protect/dashboard',
+          },
+          {
+            name: 'Properties',
+            href: '/access/protect/properties',
+          },
+        ]}
+      />
+
       <Container
         disableGutters={true}
         maxWidth={false}

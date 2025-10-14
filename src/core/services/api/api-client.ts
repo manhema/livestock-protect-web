@@ -1,5 +1,6 @@
 import { getToken } from '../../../shared/services/firebase-services.ts';
 import { config } from '../../config/config.ts';
+import { OrganizationUtil } from '../../../shared/utils/organization-util.ts';
 
 // only allow the headers property to be passed in the RequestOptions
 type RequestOptions = Pick<RequestInit, 'headers' | 'mode'>;
@@ -21,12 +22,10 @@ class ApiClient {
       'X-Api-Key': this.apiKey,
     };
 
-    /*
-    const organization = getCurrentOrganization();
-    if (organization) {
-      headers['X-Organization-Id'] = organization;
+    const organizationId = OrganizationUtil.getCurrentOrganization();
+    if (organizationId) {
+      headers['X-Organization-Id'] = organizationId;
     }
-    */
 
     if (!isFormData) {
       headers['Content-Type'] = 'application/json';

@@ -15,15 +15,24 @@ import { AccessProtectPropertiesPage } from './pages/access-protect/properties/a
 import { VisitsPage } from './pages/access-protect/properties/[propertyId]/visits/visits-page.tsx';
 import { VisitPage } from './pages/access-protect/properties/[propertyId]/visits/[visitId]/visit-page.tsx';
 import { AccessProtectDashboardPage } from './pages/access-protect/dashboard/access-protect-dashboard-page.tsx';
+import {
+  AccessProtectDashboardByPropertyIdPage,
+} from './pages/access-protect/properties/[propertyId]/access-protect-dashboard-by-property-id-page.tsx';
+import { OrganizationsGuard } from './routing/guards/guards/organizations-guard.tsx';
+import { PoliciesGuard } from './routing/guards/guards/policies-guard.tsx';
 
 const ProtectedAppLayout = () => {
   return (
     <AuthenticationGuard
       fallback={<LoginPage />}
     >
-      <MiniDrawerNavigation>
-        <Outlet />
-      </MiniDrawerNavigation>
+      <OrganizationsGuard>
+        <PoliciesGuard>
+          <MiniDrawerNavigation>
+            <Outlet />
+          </MiniDrawerNavigation>
+        </PoliciesGuard>
+      </OrganizationsGuard>
     </AuthenticationGuard>
   );
 };
@@ -45,6 +54,8 @@ export const AppRoutes = () => {
           <Route index path="/access/protect/:propertyId" element={<MovementsByPropertyIdPage />} />
 
           <Route index path="/access/protect/properties" element={<AccessProtectPropertiesPage />} />
+          <Route index path="/access/protect/properties/:propertyId" element={<AccessProtectDashboardByPropertyIdPage />} />
+
 
           <Route index path="/access/protect/properties/:propertyId/visits" element={<VisitsPage />} />
           <Route index path="/access/protect/properties/:propertyId/visits/:visitId" element={<VisitPage />} />

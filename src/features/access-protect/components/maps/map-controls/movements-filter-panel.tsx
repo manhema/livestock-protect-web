@@ -20,7 +20,7 @@ interface FilterPanelProps {
   onFilterChange: (filter: IMovementsFilter | undefined) => void;
 }
 
-export const FilterPanel: FC<FilterPanelProps> = ({ visitors, sites, onFilterChange }) => {
+export const MovementsFilterPanel: FC<FilterPanelProps> = ({ visitors, sites, onFilterChange }) => {
   const [selectedEntities, setSelectedEntities] = useState<ISelectedEntities | undefined>();
 
   const [selectedVisitors, toggleVisitor, setSelectedVisitors] = useToggleSelection([]);

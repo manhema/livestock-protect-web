@@ -1,16 +1,14 @@
 import { Avatar, Box, Chip, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import type { FC } from 'react';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
-dayjs.extend(relativeTime);
 
 interface CheckedOutChipProps {
   datetime: Date | string;
 }
 
 export const CheckedOutChip : FC<CheckedOutChipProps>= ({ datetime }) => {
-  const timeago = dayjs(datetime).fromNow();
+  const visitedAt = dayjs(datetime);
 
   return (
     <Stack
@@ -49,7 +47,7 @@ export const CheckedOutChip : FC<CheckedOutChipProps>= ({ datetime }) => {
       />
 
       <Typography variant={'caption'}>
-        {timeago}
+        Checked-Out: {visitedAt.format('ddd DD MMM YYYY HH:mm')}
       </Typography>
     </Stack>
   );
