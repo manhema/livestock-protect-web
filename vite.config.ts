@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { federation } from '@module-federation/vite';
@@ -12,7 +12,7 @@ import { dependencies as deps } from './package.json';
 
 const config = {
   lcl: {
-    port: 3000,
+    port: 3001,
     base: 'http://localhost:3000',
   },
   dev: {
@@ -57,6 +57,8 @@ export default defineConfig({
           requiredVersion: deps['react-dom'],
         },
       },
+      // Generate a manifest that the runtime can use
+      manifest: true,
     }),
   ],
   resolve: {
