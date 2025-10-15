@@ -42,11 +42,11 @@ export const AccessProtectFullScreenMapControls: FC<AccessProtectFullScreenMapCo
 
 
       <Grid container spacing={2} sx={{ my:2 }}>
-        <Grid size={{ sm: 6, md: 6 }}>
+        <Grid size={{ sm: 8, md: 8 }}>
           <DateRangePicker value={range} onChange={onRangeChange} />
 
         </Grid>
-        <Grid size={{ sm: 6, md: 6 }}>
+        <Grid size={{ sm: 4, md: 4 }}>
           <Box
             sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
           >
@@ -56,7 +56,6 @@ export const AccessProtectFullScreenMapControls: FC<AccessProtectFullScreenMapCo
               options={options}
               onDrillDownFilter={(value) => {
                 onOptionsChange(value);
-                onFilterChange(undefined);
               }}
             />
             <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />

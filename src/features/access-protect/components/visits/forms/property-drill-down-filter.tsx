@@ -35,25 +35,26 @@ export const PropertyDrillDownFilter: FC<PropertyDrillDownFilterProps> = ({ prop
         data-testid="select-location-input"
         select
         variant="outlined"
-        defaultValue={options?.propertyId ?? 'all'}
+        value={options?.propertyId ?? 'all'}
         onChange={handleChange}
-        // slotProps={{
-        //   // select: {
-        //   //   popper: {
-        //   //     container: portalContainer ?? undefined,
-        //   //     disablePortal: !!portalContainer,
-        //   //   },
-        //   // },
-        //
-        // }}
-        SelectProps={{
-          MenuProps: {
-            // If we have a container from context, use it; otherwise fall back to body
-            container: () => portalContainer ?? document.body,
-            // When we have a container INSIDE fullscreen, disablePortal should be true
-            disablePortal: !!portalContainer,
+        slotProps={{
+          select: {
+            MenuProps: {
+              // If we have a container from context, use it; otherwise fall back to body
+              container: () => portalContainer ?? document.body,
+              // When we have a container INSIDE fullscreen, disablePortal should be true
+              disablePortal: !!portalContainer,
+            },
           },
         }}
+        // SelectProps={{
+        //   MenuProps: {
+        //     // If we have a container from context, use it; otherwise fall back to body
+        //     container: () => portalContainer ?? document.body,
+        //     // When we have a container INSIDE fullscreen, disablePortal should be true
+        //     disablePortal: !!portalContainer,
+        //   },
+        // }}
       >
         <MenuItem key={'all'} value={'all'} data-testid="select-property-option">
           <small>

@@ -139,6 +139,7 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
                   >
                     <AccessProtectMovementsMap
                       isLoading={isLoading}
+                      // propertyId={options?.propertyId}
                       movements={movements}
                       controls={(
                         <Box >
@@ -148,6 +149,7 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
                             options={options}
                             onOptionsChange={(_options) => {
                               setOptions(_options);
+                              setFilter(undefined);
                             }}
                             range={range}
                             onRangeChange={(_range) => {
