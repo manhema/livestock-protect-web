@@ -7,9 +7,7 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import dayjs, { Dayjs } from 'dayjs';
 import { type FC, Fragment, useState } from 'react';
-import {
-  LocationStatsCard,
-} from '../../../features/access-protect/components/dashboard/cards/location-stats-card.tsx';
+import { LocationStatsCard } from '../../../features/access-protect/components/dashboard/cards/location-stats-card.tsx';
 import { ReasonStatsCard } from '../../../features/access-protect/components/dashboard/cards/reason-stats-card.tsx';
 import { SummaryStatistics } from '../../../features/access-protect/components/dashboard/summary-statistics.tsx';
 import { DateRangePicker } from '../../../features/access-protect/components/date-range-picker.tsx';
@@ -20,7 +18,6 @@ import {
   MovementsFilterPanel,
 } from '../../../features/access-protect/components/maps/map-controls/movements-filter-panel.tsx';
 import type { IMovementsFilter } from '../../../features/access-protect/services/access-protect-services.ts';
-import type { MovementReport } from '../../../features/access-protect/services/models/movement-report-model.ts';
 import {
   useQueryAccessProtectProperties,
   useQueryOrganizationMovements,
@@ -37,6 +34,9 @@ import {
   type IPropertyOptionsFilter,
   PropertyDrillDownFilter,
 } from '../../../features/access-protect/components/visits/forms/property-drill-down-filter.tsx';
+import {
+  AccessProtectFullScreenMapControls,
+} from '../../../features/access-protect/components/maps/map-controls/access-protect-fullscreen-map-controls.tsx';
 
 interface AccessProtectDashboardProps {
   properties: PropertyModel[];
@@ -106,11 +106,78 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
                 </IconButton>
               </Grid>
             </Grid>
+            {/* end: Date & Filter Panel  */}
             <Divider sx={{ my:2 }} />
-            <Stats
-              isLoading={isLoading}
-              movements={movements}
-            />
+            {/*<Stats*/}
+            {/*  isLoading={isLoading}*/}
+            {/*  movements={movements}*/}
+            {/*/>*/}
+            <Box>
+              <SummaryStatistics isLoading={isLoading} movements={movements} />
+              <Grid container spacing={2} sx={{ my:2 }}>
+                <Grid size={{ sm: 6, md: 8 }}>
+                  {/*start locations*/}
+                  <LocationStatsCard isLoading={isLoading} movements={movements} />
+                  {/*end locations*/}
+
+                  {/*start reasons*/}
+                  <ReasonStatsCard isLoading={isLoading} movements={movements} />
+                  {/*end reasons*/}
+                </Grid>
+                <Grid size={{ sm: 6, md: 4 }}>
+                  <Card
+                    sx={{
+                      borderRadius: 2,
+                      border: '1px solid',
+                      borderColor: 'divider',
+                      backgroundColor: '#fff',
+
+                      height: '100%',
+                      width: '100%',
+                      // overflow: 'hidden', // Prevent scrolling
+                    }}
+                  >
+                    <AccessProtectMovementsMap
+                      isLoading={isLoading}
+                      movements={movements}
+                      controls={(
+                        <Box >
+                          <AccessProtectFullScreenMapControls
+                            isLoading={isLoading}
+                            properties={properties}
+                            options={options}
+                            onOptionsChange={(_options) => {
+                              setOptions(_options);
+                            }}
+                            range={range}
+                            onRangeChange={(_range) => {
+                              setRange(_range);
+                            }}
+                            filter={filter}
+                            onFilterChange={(_filter) => {
+                              setFilter(_filter);
+                            }}
+                            movements={movements}
+                          />
+                        </Box>
+                      )}
+                    />
+                  </Card>
+                </Grid>
+              </Grid>
+              {/*start traffic*/}
+              <Grid container spacing={2} sx={{ mt:2 }}>
+                <Grid size={{ sm: 6, md: 8 }}>
+                  <HourlyTrafficStatsCard isLoading={isLoading} movements={movements} />
+                </Grid>
+                <Grid size={{ sm: 6, md: 4 }}>
+                  <DailyTrafficStatsCard isLoading={isLoading} movements={movements} />
+                </Grid>
+              </Grid>
+              {/*end traffic*/}
+
+            </Box>
+
           </Grid>
 
           {isFilterOpen && (
@@ -158,58 +225,8 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
 
 
 
-interface StatsProps {
-  isLoading: boolean;
-  movements?: MovementReport;
-}
-const Stats: FC<StatsProps> = ({ isLoading ,  movements }) => {
-  return (
-    <Box>
-      <SummaryStatistics isLoading={isLoading} movements={movements} />
-      <Grid container spacing={2} sx={{ my:2 }}>
-        <Grid size={{ sm: 6, md: 8 }}>
-          {/*start locations*/}
-          <LocationStatsCard isLoading={isLoading} movements={movements} />
-          {/*end locations*/}
 
-          {/*start reasons*/}
-          <ReasonStatsCard isLoading={isLoading} movements={movements} />
-          {/*end reasons*/}
-        </Grid>
-        <Grid size={{ sm: 6, md: 4 }}>
-          <Card
-            sx={{
-              borderRadius: 2,
-              border: '1px solid',
-              borderColor: 'divider',
-              backgroundColor: '#fff',
 
-              height: '100%',
-              width: '100%',
-              overflow: 'hidden', // Prevent scrolling
-            }}
-          >
-            <AccessProtectMovementsMap
-              isLoading={isLoading}
-              movements={movements}
-            />
-          </Card>
-        </Grid>
-      </Grid>
-      {/*start traffic*/}
-      <Grid container spacing={2} sx={{ mt:2 }}>
-        <Grid size={{ sm: 6, md: 8 }}>
-          <HourlyTrafficStatsCard isLoading={isLoading} movements={movements} />
-        </Grid>
-        <Grid size={{ sm: 6, md: 4 }}>
-          <DailyTrafficStatsCard isLoading={isLoading} movements={movements} />
-        </Grid>
-      </Grid>
-      {/*end traffic*/}
-
-    </Box>
-  );
-};
 
 export const AccessProtectPage = () => {
   const { organizationId } = useOrganizationStore();

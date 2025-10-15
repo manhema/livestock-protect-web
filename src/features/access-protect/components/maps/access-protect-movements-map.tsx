@@ -1,5 +1,5 @@
-import { type FC, Fragment, useEffect, useState } from 'react';
-import { Box, IconButton, LinearProgress, useMediaQuery, useTheme } from '@mui/material';
+import { type FC, Fragment, type ReactNode, useEffect, useRef, useState } from 'react';
+import { Box, IconButton, LinearProgress, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { SharedAppMap } from '../../../../shared/components/shared-app-map.tsx';
 import type {
   MovementPathModel,
@@ -13,7 +13,11 @@ import { InfoWindows } from './map-content/info-windows/info-windows.tsx';
 import { SiteMarkers } from './map-content/site-markers/site-markers.tsx';
 import { MovementPaths } from './map-content/movement-paths/movement-paths.tsx';
 import { useNavigate } from 'react-router';
-import { MapControl, ControlPosition } from '@vis.gl/react-google-maps';
+import { ControlPosition, MapControl } from '@vis.gl/react-google-maps';
+import { useFullscreen } from '../../../../shared/utils/hooks/use-fullscreen-hook.ts';
+import { MapPortalContext } from '../../utils/context/portal-context.tsx';
+import { MapFitBounds } from '../../../../shared/components/map-fit-bounds.tsx';
+
 
 interface AccessProtectMovementsMapProps {
   // range: DateTimeRange;
@@ -22,9 +26,12 @@ interface AccessProtectMovementsMapProps {
   isLoading: boolean;
   propertyId?: string;
   movements?: MovementReport;
+  controls?: ReactNode;
 }
-export const AccessProtectMovementsMap: FC<AccessProtectMovementsMapProps> = ({ isLoading, movements, propertyId }) => {
+export const AccessProtectMovementsMap: FC<AccessProtectMovementsMapProps> = ({ isLoading, movements, propertyId, controls }) => {
   const navigate = useNavigate();
+  const controlsPortalRef = useRef<HTMLDivElement>(null);
+  const fullscreen = useFullscreen();
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
@@ -71,12 +78,15 @@ export const AccessProtectMovementsMap: FC<AccessProtectMovementsMapProps> = ({ 
   }, [movements]);
 
 
+
   return (
     <Fragment>
       {isLoading && (<LinearProgress variant="indeterminate" sx={{ width: '100%' }} />)}
       <Box style={{ width: '100%', height: '100%' }}>
         <SharedAppMap
-          key={`map-${JSON.stringify(mapBounds)}`}
+          // key={`map-${JSON.stringify(mapBounds)}`}
+          //   key={fullscreen.isFullscreen ? 'map-stable' : `map-${JSON.stringify(mapBounds)}`}
+          key={'map-stable' }
           defaultBounds={computeBounds(movements?.sites ?? [], movements?.movementPaths ?? [])}
           onBoundsChanged={() => {}}
           mapTypeId="terrain"
@@ -85,7 +95,56 @@ export const AccessProtectMovementsMap: FC<AccessProtectMovementsMapProps> = ({ 
           fullscreenControl={true}
           mapTypeControlOptions={{ position: ControlPosition.LEFT_TOP }}
         >
+          <MapFitBounds bounds={mapBounds} />
 
+          <MapControl
+            position={ControlPosition.LEFT_TOP}
+            // prevent map from swallowing events outside the control
+            // @ts-expect-error MapControl accepts style but types may not include it
+            // style={{ pointerEvents: 'none' }}
+          >
+            <Paper elevation={3}
+              sx={{
+                // p: 2,
+                // my:0,
+                // position: 'relative',
+                // zIndex: (theme) => theme.zIndex.modal + 1,
+                // pointerEvents: 'auto', // re-enable for the control content
+              }}
+            >
+              <Box>fullscreen: {JSON.stringify(fullscreen)}</Box>
+
+
+            </Paper>
+          </MapControl>
+
+          <div ref={controlsPortalRef} style={{ position: 'relative', zIndex: 9999 }}>
+
+            {fullscreen.isFullscreen && (
+              <MapControl
+                position={ControlPosition.RIGHT_TOP}
+                // prevent map from swallowing events outside the control
+                // @ts-expect-error MapControl accepts style but types may not include it
+                style={{ pointerEvents: 'none' }}
+              >
+                <MapPortalContext.Provider value={controlsPortalRef.current}>
+                  <Paper elevation={3}
+                    sx={{
+                      p: 2,
+                      py:1,
+                      // position: 'relative',
+                      // zIndex: (theme) => theme.zIndex.modal + 1,
+                      // pointerEvents: 'auto', // re-enable for the control content
+                    }}
+                  >
+                    {controls}
+                  </Paper>
+                </MapPortalContext.Provider>
+
+              </MapControl>
+
+            )}
+          </div>
           {/*
                 <Box
                   sx={{
@@ -150,7 +209,6 @@ export const AccessProtectMovementsMap: FC<AccessProtectMovementsMapProps> = ({ 
 
 
               <MapControl position={ControlPosition.LEFT_TOP}>
-
                 <Box
                   display="flex"
                   alignItems="flex-start"

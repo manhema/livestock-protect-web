@@ -4,6 +4,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Box } from '@mui/material';
 import type { DateTimeRange } from '../types';
+import { useMapPortal } from '../utils/context/portal-context.tsx';
 
 interface DateTimeRangePickerProps {
   value: DateTimeRange;
@@ -12,6 +13,8 @@ interface DateTimeRangePickerProps {
 }
 
 export const DateRangePicker: FC<DateTimeRangePickerProps> = ({ value, onChange, disabled = false }) => {
+  const portalContainer = useMapPortal();
+
   const [start, end] = value;
 
   // Max selectable date is today
@@ -32,6 +35,10 @@ export const DateRangePicker: FC<DateTimeRangePickerProps> = ({ value, onChange,
           format="DD MMM YYYY"
           slotProps={{
             textField: { size: 'small' },
+            popper: {
+              container: portalContainer ?? undefined,
+              disablePortal: !!portalContainer,
+            },
           }}
           // renderInput={(params) => (
           //   <TextField  {...params} />
@@ -47,6 +54,10 @@ export const DateRangePicker: FC<DateTimeRangePickerProps> = ({ value, onChange,
           format="DD MMM YYYY"
           slotProps={{
             textField: { size: 'small' },
+            popper: {
+              container: portalContainer ?? undefined,
+              disablePortal: !!portalContainer,
+            },
           }}
           // renderInput={(params) => (
           //   <TextField  {...params}  />
