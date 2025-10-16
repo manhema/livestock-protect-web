@@ -12,7 +12,7 @@ import { dependencies as deps } from './package.json';
 
 const config = {
   lcl: {
-    port: 3001,
+    port: 3000,
     base: 'http://localhost:3000',
   },
   dev: {

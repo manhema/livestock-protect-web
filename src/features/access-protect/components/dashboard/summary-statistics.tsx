@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 
-
 import type { MovementReport } from '../../services/models/movement-report-model.ts';
 import type { FC } from 'react';
 import { VisitorStatsCard } from './cards/visitor-stats-card.tsx';
@@ -30,10 +29,6 @@ export const SummaryStatistics: FC<SummaryStatisticsProps> = ({ isLoading, movem
         <VisitorStatsCard isLoading={isLoading} movements={movements} />
         <VehicleStatsCard isLoading={isLoading} movements={movements} />
         <DeliveryStatsCard isLoading={isLoading} movements={movements} />
-
-        {/*{stats.map((stat) => (*/}
-        {/*  <StatsCard key={stat.label} value={stat.value} label={stat.label} />*/}
-        {/*))}*/}
       </Box>
     </Box>
   );
