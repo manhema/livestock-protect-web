@@ -9,7 +9,6 @@ import { DateRangePicker } from '../../date-range-picker.tsx';
 import Divider from '@mui/material/Divider';
 import TuneIcon from '@mui/icons-material/Tune';
 import { MovementsFilterPanel } from './movements-filter-panel.tsx';
-import Grid from '@mui/material/Grid';
 
 interface AccessProtectFullScreenMapControlsProps {
   properties: PropertyModel[];
@@ -40,35 +39,35 @@ export const AccessProtectFullScreenMapControls: FC<AccessProtectFullScreenMapCo
       />
       {/*  Date & Filter Panel  */}
 
+      <Box sx={{ py: 2, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
 
-      <Grid container spacing={2} sx={{ my:2 }}>
-        <Grid size={{ sm: 8, md: 8 }}>
+        <Box sx={{ width: '375px' }}>
           <DateRangePicker value={range} onChange={onRangeChange} />
+        </Box>
 
-        </Grid>
-        <Grid size={{ sm: 4, md: 4 }}>
-          <Box
-            sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+        <Box
+          sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+        >
+          <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+          <PropertyDrillDownFilter
+            properties={properties}
+            options={options}
+            onDrillDownFilter={(value) => {
+              onOptionsChange(value);
+            }}
+          />
+          <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+          <IconButton
+            onClick={() => {
+              setIsFilterOpen((prev) => !prev);
+            }}
           >
-            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-            <PropertyDrillDownFilter
-              properties={properties}
-              options={options}
-              onDrillDownFilter={(value) => {
-                onOptionsChange(value);
-              }}
-            />
-            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-            <IconButton
-              onClick={() => {
-                setIsFilterOpen((prev) => !prev);
-              }}
-            >
-              <TuneIcon />
-            </IconButton>
-          </Box>
-        </Grid>
-      </Grid>
+            <TuneIcon />
+          </IconButton>
+        </Box>
+
+
+      </Box>
 
 
       {/* end: Date & Filter Panel  */}
