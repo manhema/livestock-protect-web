@@ -224,11 +224,6 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
   );
 };
 
-
-
-
-
-
 export const AccessProtectPage = () => {
   const { organizationId } = useOrganizationStore();
 

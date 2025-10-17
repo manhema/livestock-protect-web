@@ -3,16 +3,12 @@ import { LoginPage } from './pages/login-page.tsx';
 import { HomePage } from './pages/home/home-page.tsx';
 import { AuthenticationGuard } from './routing/guards/authentication-guard.tsx';
 import { PropertiesPage } from './pages/properties/properties-page.tsx';
-import { MovementsPage } from './pages/access-protect/movements/movements-page.tsx';
 import { ReportsPage } from './pages/reports/reports-page.tsx';
 import {
   ElectronicBiosecurityAssessmentPage,
 } from './pages/contingency-planning/electronic-biosecurity-assessment-page.tsx';
 import { OperationsPage } from './pages/operations/operations-page.tsx';
 import { MiniDrawerNavigation } from './routing/drawers/mini-drawer-navigation.tsx';
-import {
-  MovementsByPropertyIdPage,
-} from './pages/access-protect/movements/[propertyId]/movements-by-property-id-page.tsx';
 import { AccessProtectPropertiesPage } from './pages/access-protect/properties/access-protect-properties-page.tsx';
 import { VisitsPage } from './pages/access-protect/properties/[propertyId]/visits/visits-page.tsx';
 import { VisitPage } from './pages/access-protect/properties/[propertyId]/visits/[visitId]/visit-page.tsx';
@@ -47,10 +43,7 @@ export const AppRoutes = () => {
           <Route index path="/properties" element={<PropertiesPage />} />
           <Route index path="/operations" element={<OperationsPage />} />
 
-          <Route index path="/access/protect/dashboard" element={<AccessProtectPage />} />
-
-          <Route index path="/access/protect" element={<MovementsPage />} />
-          <Route index path="/access/protect/:propertyId" element={<MovementsByPropertyIdPage />} />
+          <Route index path="/access/protect" element={<AccessProtectPage />} />
 
           <Route index path="/access/protect/properties" element={<AccessProtectPropertiesPage />} />
 
