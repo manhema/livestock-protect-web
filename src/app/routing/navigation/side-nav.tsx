@@ -5,12 +5,20 @@ import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Box from '@mui/material/Box';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router';
 import { ContingencyPlanIcon, OperationsIcon, PropertiesIcon } from '../../../core/utils/icons/icons.tsx';
 import AccessControlIcon from '../../../core/utils/icons/access-control-icon.tsx';
 import { Report as ReportIcon } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import CalculateOutlinedIcon from '@mui/icons-material/CalculateOutlined';
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import CoronavirusOutlinedIcon from '@mui/icons-material/CoronavirusOutlined';
+import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
+import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutlined';
+import EmergencyOutlinedIcon from '@mui/icons-material/EmergencyOutlined';
 interface SideNavProps {
   leftDrawerOpen: boolean;
 }
@@ -95,6 +103,49 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
           </ListItemButton>
         </ListItem>
 
+        {/*Start: Properties - Sub Navigation */}
+        {leftDrawerOpen && (
+          <Fragment>
+            <Divider sx={{ my:0 }} />
+            <Box sx={{ ml: 4, pl: 0, borderLeft: 1, borderColor: 'divider' }}>
+
+              <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect/properties"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <PlaceOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Points Of Interest"
+                    sx={{
+                      opacity: 1,
+                      mt: 0.5,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Box>
+            <Divider sx={{ my:0 }} />
+          </Fragment>
+        )}
+        {/*End: Properties - Sub Navigation */}
+
         {/* Operations */}
         <ListItem key="operations" disablePadding sx={{ display: 'block' }}>
           <ListItemButton
@@ -132,6 +183,143 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             />
           </ListItemButton>
         </ListItem>
+
+        {/*Start: Operations - Sub Navigation */}
+        {leftDrawerOpen && (
+          <Fragment>
+            <Divider sx={{ my:0 }} />
+            <Box sx={{ ml: 4, pl: 0, borderLeft: 1, borderColor: 'divider' }}>
+              <ListItem key="access-protect" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/contingency-planning"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <DashboardIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Dashboard"
+                    sx={{
+                      opacity: 1,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect/properties"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <CalculateOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Depopulation Calculator"
+                    sx={{
+                      opacity: 1,
+                      mt: 0.5,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect/properties"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <HistoryOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Job History"
+                    sx={{
+                      opacity: 1,
+                      mt: 0.5,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect/properties"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <CoronavirusOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Confirmed Disease"
+                    sx={{
+                      opacity: 1,
+                      mt: 0.5,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Box>
+            <Divider sx={{ my:0 }} />
+          </Fragment>
+        )}
+        {/*End: Operations - Sub Navigation */}
 
         {/* AccessProtect */}
         <ListItem key="access/protect" disablePadding sx={{ display: 'block' }}>
@@ -171,83 +359,79 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
           </ListItemButton>
         </ListItem>
 
-        {/*<Divider />*/}
-        <Divider sx={{ my:1 }}/>
-        <ListItem key="access-protect" disablePadding sx={{ display: 'block' }}>
-          <ListItemButton
-            component={Link}
-            to="access/protect"
-            sx={{
-              minHeight: 48,
-              // flexDirection: 'column',
-              // justifyContent: 'center',
-              // alignItems: 'center',
-              px: 2.5,
-              // py: 1,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                justifyContent: 'center',
-              }}
-            >
-              <DashboardIcon/>
-            </ListItemIcon>
-            <ListItemText
-              primary="Dashboard"
-              sx={{
-                opacity: leftDrawerOpen ? 1 : 0,
-                // mt: 0.5,
-                ml: 2,
-                '& .MuiTypography-root': {
-                  fontSize: '0.65rem',
-                  // textAlign: 'center',
-                  lineHeight: 1.2,
-                },
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
+        {/*Start: AccessProtect - Sub Navigation */}
+        {leftDrawerOpen && (
+          <>
+            <Divider sx={{ my:0 }} />
+            <Box sx={{ ml: 4, pl: 0, borderLeft: 1, borderColor: 'divider' }}>
+              <ListItem key="access-protect" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <DashboardIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Dashboard"
+                    sx={{
+                      opacity: 1,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
 
-        <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
-          <ListItemButton
-            component={Link}
-            to="access/protect/properties"
-            sx={{
-              minHeight: 48,
-              // flexDirection: 'column',
-              // justifyContent: 'center',
-              // alignItems: 'center',
-              px: 2.5,
-              // py: 1,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                justifyContent: 'center',
-              }}
-            >
-              <PropertiesIcon/>
-            </ListItemIcon>
-            <ListItemText
-              primary="Properties"
-              sx={{
-                opacity: leftDrawerOpen ? 1 : 0,
-                mt: 0.5,
-                ml: 2,
-                '& .MuiTypography-root': {
-                  fontSize: '0.65rem',
-                  // textAlign: 'center',
-                  lineHeight: 1.2,
-                },
-              }}
-            />
-          </ListItemButton>
-        </ListItem>
+              <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect/properties"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <HomeWorkOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Properties"
+                    sx={{
+                      opacity: 1,
+                      mt: 0.5,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Box>
+            <Divider sx={{ my:0 }} />
+          </>
+        )}
+        {/*End: AccessProtect - Sub Navigation */}
 
-        <Divider sx={{ my:1 }}/>
         {/* ContingencyPlanning */}
         <ListItem key="ebas" disablePadding sx={{ display: 'block' }}>
           <ListItemButton
@@ -285,6 +469,79 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
             />
           </ListItemButton>
         </ListItem>
+
+        {/*Start: ContingencyPlanning - Sub Navigation */}
+        {leftDrawerOpen && (
+          <Fragment>
+            <Divider sx={{ my:0 }} />
+            <Box sx={{ ml: 4, pl: 0, borderLeft: 1, borderColor: 'divider' }}>
+              <ListItem key="access-protect" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/contingency-planning/ebas"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <HealthAndSafetyOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="eBAS"
+                    sx={{
+                      opacity: 1,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  component={Link}
+                  to="/access/protect/properties"
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <EmergencyOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Emergency Response Plan"
+                    sx={{
+                      opacity: 1,
+                      mt: 0.5,
+                      ml: 2,
+                      '& .MuiTypography-root': {
+                        fontSize: '0.65rem',
+                        lineHeight: 1.2,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Box>
+            <Divider sx={{ my:0 }} />
+          </Fragment>
+        )}
+        {/*End: ContingencyPlanning - Sub Navigation */}
 
         {/* Reports */}
         <ListItem key="reports" disablePadding sx={{ display: 'block' }}>
