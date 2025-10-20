@@ -5,40 +5,20 @@ import type { ChartData, ChartOptions } from 'chart.js';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Colors, Title);
 
-
-
-
-
 type BarChartProps = Omit<ComponentPropsWithoutRef<typeof Bar>, 'data' | 'options'> & {
   data: ChartData<'bar'>;
   options?: ChartOptions<'bar'>;
 };
 
 export const BarChart = ({ data, ...props }: BarChartProps) => {
-  // const locations = [
-  //   { label: 'Musterfield', value: 39 },
-  //   { label: 'Bryanston', value: 32 },
-  //   { label: 'Linksfield', value: 21 },
-  //   { label: 'Northern', value: 18 },
-  //   { label: 'Broadacres', value: 17 },
-  // ];
 
-  // const data: ChartData<'bar'> = {
-  //   labels: locations.map((row) => row.label),
-  //   datasets: [
-  //     {
-  //       label: 'Location visits',
-  //       data: locations.map((row) => row.value),
-  //     },
-  //   ],
-  // };
 
   const options: ChartOptions<'bar'> = {
     indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: false },
+      legend: { display: true },
       tooltip: { enabled: true },
     },
     scales: {

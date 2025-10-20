@@ -3,8 +3,10 @@ import type { ComponentPropsWithoutRef } from 'react';
 import type { ChartData, ChartOptions } from 'chart.js';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors, Title } from 'chart.js';
+import { PieExternalLabelsPlugin } from '../../../utils/plugins/pie-external-labels-plugin.ts';
 
-ChartJS.register(ArcElement, Tooltip, Legend, Colors, Title);
+
+ChartJS.register(ArcElement, Tooltip, Legend, Colors, Title, PieExternalLabelsPlugin);
 
 type PieChartProps = Omit<ComponentPropsWithoutRef<typeof Pie>, 'data' | 'options'> & {
   data: ChartData<'pie'>;
@@ -12,10 +14,6 @@ type PieChartProps = Omit<ComponentPropsWithoutRef<typeof Pie>, 'data' | 'option
 };
 
 export const PieChart = ({ data,options, ...props }: PieChartProps) => {
-
-
-
-
   return (
     <Pie
       data={data}

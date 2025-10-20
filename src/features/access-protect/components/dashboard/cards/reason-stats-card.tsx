@@ -13,14 +13,6 @@ interface ReasonStatsCardProps {
   movements?: MovementReport;
 }
 export const ReasonStatsCard: FC<ReasonStatsCardProps> = ({ isLoading, movements }) => {
-  // const reasons = [
-  //   { label: 'Feed delivery', value: 32 },
-  //   { label: 'Deliveries', value: 32 },
-  //   { label: 'Egg collection', value: 21 },
-  //   { label: 'Biosecurity', value: 12 },
-  //   { label: 'Pest control', value: 17 },
-  // ];
-
   const reasonOptions = [
     { value: 'Biosecurity visit', label: 'Biosecurity visit' },
     { value: 'Chick population', label: 'Chick population' },
@@ -51,9 +43,6 @@ export const ReasonStatsCard: FC<ReasonStatsCardProps> = ({ isLoading, movements
   });
 
   const reasons = (_reasons ?? []).sort((a, b) => b.value - a.value).slice(0, 5);
-
-
-
 
   return (
     <Grid container spacing={2} sx={{ mt:2 }}>
@@ -120,7 +109,19 @@ export const ReasonStatsCard: FC<ReasonStatsCardProps> = ({ isLoading, movements
                 maintainAspectRatio: false,
                 plugins: {
                   legend: { display: false },
-                  title: { display: true, text: 'Reasons Share' },
+                  title: {
+                    display: true, text: 'Reasons Share',
+                    padding: { bottom: 30 },   // push chart down so title is visible
+                  },
+
+                  'pieExternalLabels': {
+                    display: true,
+                    offset: 28,
+                    bend: 14,
+                  },
+                },
+                layout: {
+                  padding: { top: 30, bottom: 28, left: 12, right: 12 },
                 },
               }}
             />
