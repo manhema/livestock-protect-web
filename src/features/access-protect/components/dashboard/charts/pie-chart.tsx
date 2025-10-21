@@ -6,7 +6,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors, Title } from 'ch
 import { PieExternalLabelsPlugin } from '../../../utils/plugins/pie-external-labels-plugin.ts';
 
 
-ChartJS.register(ArcElement, Tooltip, Legend, Colors, Title, PieExternalLabelsPlugin);
+ChartJS.register(ArcElement, Tooltip, Legend, Colors, Title);
 
 type PieChartProps = Omit<ComponentPropsWithoutRef<typeof Pie>, 'data' | 'options'> & {
   data: ChartData<'pie'>;
@@ -18,6 +18,7 @@ export const PieChart = ({ data,options, ...props }: PieChartProps) => {
     <Pie
       data={data}
       options={options}
+      plugins={[PieExternalLabelsPlugin]}
       {...props}
     />
   );

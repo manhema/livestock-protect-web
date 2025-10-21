@@ -48,52 +48,12 @@ export const PieExternalLabelsPlugin: Plugin<'pie'> = {
       ctx.lineTo(ex + (isRight ? 8 : -8), ey);
       ctx.stroke();
 
-      // Draw label text with clamping inside chart area
+      // Draw label text
       const label = String(labels[i] ?? '');
       ctx.textAlign = isRight ? 'left' : 'right';
       ctx.textBaseline = 'middle';
-
-      // initial target position
-      let textX = ex + (isRight ? 12 : -12);
-      let textY = ey;
-
-      // measure to compute clamping boxes
-      const m = ctx.measureText(label);
-      const textW = Math.max(1, m.width);
-      const textH = (m.actualBoundingBoxAscent ?? 8) + (m.actualBoundingBoxDescent ?? 2);
-      const margin = 4;
-
-      // clamp vertically so bottom labels are not cut off
-      const halfH = textH / 2;
-      if (textY - halfH < chart.chartArea.top + margin) {
-        textY = chart.chartArea.top + margin + halfH;
-      }
-      if (textY + halfH > chart.chartArea.bottom - margin) {
-        textY = chart.chartArea.bottom - margin - halfH;
-      }
-
-      // clamp horizontally
-      if (isRight) {
-        if (textX + textW > chart.chartArea.right - margin) {
-          textX = chart.chartArea.right - margin - textW;
-        }
-      } else {
-        if (textX < chart.chartArea.left + margin) {
-          textX = chart.chartArea.left + margin;
-        }
-      }
-
-      // Recompute tail end so connector meets the text nicely
-      const tailEndX = isRight ? textX - 8 : textX + textW + 8;
-      const tailEndY = textY;
-
-      // redraw the final segment to the clamped point
-      ctx.beginPath();
-      ctx.moveTo(mx, my);
-      ctx.lineTo(tailEndX, tailEndY);
-      ctx.stroke();
-
-      // finally draw the text
+      const textX = ex + (isRight ? 12 : -12);
+      const textY = ey;
       ctx.fillText(label, textX, textY);
     });
 

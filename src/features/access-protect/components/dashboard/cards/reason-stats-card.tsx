@@ -113,7 +113,6 @@ export const ReasonStatsCard: FC<ReasonStatsCardProps> = ({ isLoading, movements
                     display: true, text: 'Reasons Share',
                     padding: { bottom: 30 },   // push chart down so title is visible
                   },
-
                   'pieExternalLabels': {
                     display: true,
                     offset: 28,
