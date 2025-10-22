@@ -11,7 +11,6 @@ import { Link } from 'react-router';
 import { ContingencyPlanIcon, OperationsIcon, PropertiesIcon } from '../../../core/utils/icons/icons.tsx';
 import AccessControlIcon from '../../../core/utils/icons/access-control-icon.tsx';
 import { Report as ReportIcon } from '@mui/icons-material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import CalculateOutlinedIcon from '@mui/icons-material/CalculateOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
@@ -19,6 +18,7 @@ import CoronavirusOutlinedIcon from '@mui/icons-material/CoronavirusOutlined';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutlined';
 import EmergencyOutlinedIcon from '@mui/icons-material/EmergencyOutlined';
+
 interface SideNavProps {
   leftDrawerOpen: boolean;
 }
@@ -189,37 +189,6 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
           <Fragment>
             <Divider sx={{ my:0 }} />
             <Box sx={{ ml: 4, pl: 0, borderLeft: 1, borderColor: 'divider' }}>
-              <ListItem key="access-protect" disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  component={Link}
-                  to="/contingency-planning"
-                  sx={{
-                    minHeight: 48,
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <DashboardIcon/>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Dashboard"
-                    sx={{
-                      opacity: 1,
-                      ml: 2,
-                      '& .MuiTypography-root': {
-                        fontSize: '0.65rem',
-                        lineHeight: 1.2,
-                      },
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-
               <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   component={Link}
@@ -364,37 +333,6 @@ export const SideNav : FC<SideNavProps> = ({ leftDrawerOpen }) => {
           <>
             <Divider sx={{ my:0 }} />
             <Box sx={{ ml: 4, pl: 0, borderLeft: 1, borderColor: 'divider' }}>
-              <ListItem key="access-protect" disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  component={Link}
-                  to="/access/protect"
-                  sx={{
-                    minHeight: 48,
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <DashboardIcon/>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Dashboard"
-                    sx={{
-                      opacity: 1,
-                      ml: 2,
-                      '& .MuiTypography-root': {
-                        fontSize: '0.65rem',
-                        lineHeight: 1.2,
-                      },
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-
               <ListItem key="access-protect/properties" disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   component={Link}

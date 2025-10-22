@@ -1,6 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
-import { Alert, Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Alert, Box, Container, Stack, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
@@ -37,6 +37,7 @@ import {
 import {
   AccessProtectFullScreenMapControls,
 } from '../../../features/access-protect/components/maps/map-controls/access-protect-fullscreen-map-controls.tsx';
+import { AlertsStatistics } from '../../../features/access-protect/components/dashboard/alerts-statistics.tsx';
 
 interface AccessProtectDashboardProps {
   properties: PropertyModel[];
@@ -79,15 +80,6 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
                 size={{ sm: 9, md: 9 }}
                 sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
               >
-                <Button
-                  type="button"
-                  size="medium"
-                  variant="contained"
-                  sx={{ mx: 2 }}
-                  // onClick={handleOpen}
-                >
-                  Properties
-                </Button>
                 <PropertyDrillDownFilter
                   properties={properties}
                   options={options}
@@ -177,6 +169,7 @@ const AccessProtectDashboard: FC<AccessProtectDashboardProps> = ({ properties })
               </Grid>
               {/*end traffic*/}
 
+              <AlertsStatistics isLoading={isLoading} movements={movements} />
             </Box>
 
           </Grid>

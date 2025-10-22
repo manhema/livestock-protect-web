@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useQueryProperties } from '../../../features/properties/state/server';
-import { AccessProtectListItem } from '../../../features/properties/components/access-protect-list-item.tsx';
+import { AccessProtectPropertyListItem } from '../../../features/properties/components/access-protect-property-list-item.tsx';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -32,7 +32,7 @@ export const PropertiesPage = () => {
               data.map((property) => (
                 <Grid key={property.id} size={{ sm: 12, md: 12, lg: 12, xl: 12 }}>
                   {/*<Grid key={property.id} size={{ sm: 6, md: 4, lg: 4, xl: 4 }}>*/}
-                  <AccessProtectListItem  property={property}/>
+                  <AccessProtectPropertyListItem property={property}/>
                 </Grid>
               ))
             }

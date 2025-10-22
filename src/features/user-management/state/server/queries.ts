@@ -43,10 +43,14 @@ export const useQueryOrganizations = () => {
 };
 
 export const useQueryPolicyInformation = (organizationId: string,  userId: string) => {
+  const { setPolicies } = useOrganizationStore();
+
   return useQuery({
     queryKey: ['queryPolicyInformation', organizationId, userId],
     queryFn: async () => {
-      return await datasource.getPolicyInformation(organizationId, userId);
+      const policies = await datasource.getPolicyInformation(organizationId, userId);
+      setPolicies(policies);
+      return policies;
     },
   });
 };

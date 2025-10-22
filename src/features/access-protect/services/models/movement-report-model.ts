@@ -92,6 +92,12 @@ export const MovementReport = z.object({
   totalPeople: z.number(),
   busiestPerson: z.string().optional(),
   mostVisitedSite: z.string().optional(),
+  alerts: z.object({
+    poultryContact: z.number(),
+    livestockVisits: z.number(),
+    illness: z.number(),
+    travel: z.number(),
+  }),
 });
 
 

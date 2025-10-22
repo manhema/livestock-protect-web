@@ -120,7 +120,7 @@ export const ReasonStatsCard: FC<ReasonStatsCardProps> = ({ isLoading, movements
                   },
                 },
                 layout: {
-                  padding: { top: 30, bottom: 28, left: 12, right: 12 },
+                  padding: { bottom: 28, left: 12, right: 12 },
                 },
               }}
             />

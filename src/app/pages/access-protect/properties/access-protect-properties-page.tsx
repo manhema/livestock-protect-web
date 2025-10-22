@@ -1,14 +1,20 @@
 import { Fragment } from 'react';
-import { AccessProtectListItem } from '../../../../features/properties/components/access-protect-list-item.tsx';
+import {
+  AccessProtectPropertyListItem,
+  AccessProtectPropertyPolicyListItem,
+} from '../../../../features/properties/components/access-protect-property-list-item.tsx';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import { BasicBreadcrumbs } from '../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
 import { useQueryAccessProtectProperties } from '../../../../features/access-protect/state/server';
 import { useOrganizationStore } from '../../../../features/user-management/state/client/store.ts';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import TuneIcon from '@mui/icons-material/Tune';
+import Typography from '@mui/material/Typography';
 
 export const AccessProtectPropertiesPage = () => {
-  const { organizationId } = useOrganizationStore();
+  const { organizationId, policies } = useOrganizationStore();
 
   const { isLoading, error, data } = useQueryAccessProtectProperties(organizationId!);
 
@@ -19,6 +25,9 @@ export const AccessProtectPropertiesPage = () => {
     return <Box>{JSON.stringify(error)}</Box>;
 
   if (data) {
+    const propertyIds = new Set((data ?? []).map((p) => p.id));
+    const missing = (policies?.properties ?? []).filter((p) => !propertyIds.has(p.propertyId));
+
     return (
       <Box>
         <BasicBreadcrumbs
@@ -35,17 +44,51 @@ export const AccessProtectPropertiesPage = () => {
           maxWidth={false}
           sx={{ p:2 }}
         >
-          Properties {data.length}
-          <Grid container spacing={0}>
-            {
-              data.map((property) => (
-                <Grid key={property.id} size={{ sm: 12, md: 12, lg: 12, xl: 12 }}>
-                  {/*<Grid key={property.id} size={{ sm: 6, md: 4, lg: 4, xl: 4 }}>*/}
-                  <AccessProtectListItem key={property.id} property={property}/>
-                </Grid>
-              ))
-            }
-          </Grid>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <Typography variant="subtitle2" >
+              Properties
+            </Typography>
+            <Box sx={{ flexGrow: 1 }} />
+
+            <Box
+              sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+            >
+              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              {/*<PropertyDrillDownFilter*/}
+              {/*  properties={properties}*/}
+              {/*  options={options}*/}
+              {/*  onDrillDownFilter={(value) => {*/}
+              {/*    onOptionsChange(value);*/}
+              {/*  }}*/}
+              {/*/>*/}
+              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <IconButton
+                onClick={() => {
+                  // setIsFilterOpen((prev) => !prev);
+                }}
+              >
+                <TuneIcon />
+              </IconButton>
+            </Box>
+          </Box>
+
+          <Divider sx={{ my:2 }} />
+
+          {
+            data.map((property) => (
+              <Box  key={property.id} >
+                <AccessProtectPropertyListItem key={property.id} property={property}/>
+              </Box>
+            ))
+          }
+
+          <Divider sx={{ my:2 }} />
+
+          {missing.map((property) => (
+            <Box key={property.propertyId} >
+              <AccessProtectPropertyPolicyListItem key={property.propertyId} property={property} />
+            </Box>
+          ))}
         </Container>
       </Box>
     );

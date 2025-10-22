@@ -12,7 +12,8 @@ export const getPropertyStatusColor = (riskLevel?: RiskLevel) => {
     case RiskLevel.None:
       return '#378c36'; // treeGreen
     default:
-      return '#2a403b';
+      // return '#2a403b';
+      return '#9e9e9e';
   }
 };
 

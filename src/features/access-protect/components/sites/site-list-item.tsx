@@ -5,7 +5,6 @@ import type { SiteModel } from '../../services/models/site-model.ts';
 import DoorFrontOutlinedIcon from '@mui/icons-material/DoorFrontOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import IconButton from '@mui/material/IconButton';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 import QrCode2OutlinedIcon from '@mui/icons-material/QrCode2Outlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -90,14 +89,6 @@ export const PropertyListItem : FC<PropertyListItemProps>= ({ property }) => {
                   </Fragment>
                 )}
               />
-
-              <IconButton
-                // onClick={
-                //   // () => navigate('/access/protect')
-                // }
-              >
-                <FileDownloadOutlinedIcon sx={{ fontSize: '18px', color: 'black' }} />
-              </IconButton>
             </Box>
           </Stack>
         </CardContent>
@@ -189,14 +180,6 @@ export const UnitListItem : FC<UnitListItemProps>= ({ property, unit }) => {
                   </Fragment>
                 )}
               />
-
-              <IconButton
-                // onClick={
-                //   // () => navigate('/access/protect')
-                // }
-              >
-                <FileDownloadOutlinedIcon sx={{ fontSize: '18px', color: 'black' }} />
-              </IconButton>
             </Box>
           </Stack>
         </CardContent>
@@ -295,14 +278,6 @@ export const AreaListItem : FC<AreaListItemProps>= ({ property, area }) => {
                   </Fragment>
                 )}
               />
-
-              <IconButton
-                // onClick={
-                //   // () => navigate('/access/protect')
-                // }
-              >
-                <FileDownloadOutlinedIcon sx={{ fontSize: '18px', color: 'black' }} />
-              </IconButton>
             </Box>
           </Stack>
         </CardContent>

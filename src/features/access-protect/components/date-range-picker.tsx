@@ -20,7 +20,7 @@ export const DateRangePicker: FC<DateTimeRangePickerProps> = ({ value, onChange,
   // Max selectable date is today
   const max = dayjs().endOf('day');
   // Min selectable date is 3 months ago (start of the day)
-  const min = dayjs().subtract(3, 'month').startOf('day').startOf('day');
+  const min = dayjs().subtract(6, 'month').startOf('day').startOf('day');
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
