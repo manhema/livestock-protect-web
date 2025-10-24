@@ -12,7 +12,6 @@ import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 
 import { useMutationCheckoutVisitor } from '../../../state/server';
 import type { VisitModel } from '../../../services/models/visit-model.ts';
-import { useOrganizationStore } from '../../../../user-management/state/client/store.ts';
 
 interface CheckoutVisitorFormProps {
   visit: VisitModel;
@@ -24,9 +23,7 @@ interface IFormInput {
 }
 
 export const CheckoutVisitorForm: FC<CheckoutVisitorFormProps> = ({   visit, onSuccess }) => {
-  const { organizationId } = useOrganizationStore();
-
-  const { isPending, mutate } = useMutationCheckoutVisitor(organizationId!, visit.property.id, visit.id);
+  const { isPending, mutate } = useMutationCheckoutVisitor(visit.property.id, visit.id);
 
   const {
     control,

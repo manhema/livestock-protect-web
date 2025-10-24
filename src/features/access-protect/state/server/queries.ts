@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AccessProtectServices, type IMovementsFilter } from '../../services/access-protect-services.ts';
 import type { DateTimeRange } from '../../types';
+import type { IVisitsFilter } from '../../services/filters';
 
 const datasource = new AccessProtectServices();
 
@@ -35,20 +36,20 @@ export const useQueryOrganizationMovementsByPropertyId = (propertyId: string, ra
   });
 };
 
-export const useQueryVisitsByPropertyId = (organizationId: string, propertyId: string) => {
+export const useQueryVisitsByPropertyId = (propertyId: string, range: DateTimeRange, filter?: IVisitsFilter) => {
   return useQuery({
-    queryKey: ['queryVisitsByPropertyId',organizationId, propertyId],
+    queryKey: ['queryVisitsByPropertyId', propertyId, range, filter],
     queryFn: async () => {
-      return await datasource.getVisitsByPropertyId(organizationId, propertyId);
+      return await datasource.getVisitsByPropertyId(propertyId, range, filter);
     },
   });
 };
 
-export const useQueryVisit = (organizationId: string, propertyId: string, visitId: string) => {
+export const useQueryVisit = (propertyId: string, visitId: string) => {
   return useQuery({
-    queryKey: ['queryVisit',organizationId, propertyId, visitId],
+    queryKey: ['queryVisit', propertyId, visitId],
     queryFn: async () => {
-      return await datasource.getVisit(organizationId, propertyId, visitId);
+      return await datasource.getVisit(propertyId, visitId);
     },
   });
 };

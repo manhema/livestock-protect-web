@@ -1,22 +1,14 @@
-import { type FC, Fragment, useState } from 'react';
+import React, { type FC, Fragment, useState } from 'react';
 import { Box, Button, InputAdornment, TextField } from '@mui/material';
 import type { VisitModel } from '../../../services/models/visit-model.ts';
 import type { SiteModel } from '../../../services/models/site-model.ts';
 import { VisitsSiteFilter } from './visits-site-filter/visits-site-filter.tsx';
-import type { IVisitorFilter } from '../../../services/access-protect-services.ts';
 import { useToggleSelection } from '../../maps/map-controls/hooks/use-toggle-selection.ts';
 import { VisitsSelectedEntitiesPanel } from './visits-selected-entities/visits-selected-entities-panel.tsx';
 import SearchIcon from '@mui/icons-material/Search';
-import React from 'react';
 import Divider from '@mui/material/Divider';
+import type { IVisitorFilter, IVisitsFilter } from '../../../services/filters';
 
-
-export interface IVisitsFilter {
-  keywords: string;
-  visitors: IVisitorFilter[];
-  vehicles: string[];
-  sites: string[];
-}
 
 interface ISelectedEntities {
   visitors: VisitModel[];

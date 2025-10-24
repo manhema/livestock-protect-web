@@ -22,11 +22,10 @@ import { SiteListItem } from '../../../../../../features/access-protect/componen
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import {
-  type IVisitsFilter,
   VisitsFilterPanel,
 } from '../../../../../../features/access-protect/components/visits/filters/visits-filter-panel.tsx';
 import type { VisitModel } from '../../../../../../features/access-protect/services/models/visit-model.ts';
-import { useOrganizationStore } from '../../../../../../features/user-management/state/client/store.ts';
+import type { IVisitsFilter } from '../../../../../../features/access-protect/services/filters';
 
 interface FiltersToolboxProps {
   visits: VisitModel[];
@@ -139,9 +138,8 @@ const VisitsData: FC<VisitsDataProps> = ({ propertyId, sites }) => {
   const [range, setRange] = useState<[Dayjs | null, Dayjs | null]>([dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')]);
   const [filter, setFilter] = useState<IVisitsFilter | undefined>();
 
-  const { organizationId } = useOrganizationStore();
 
-  const { isLoading, error, data } = useQueryVisitsByPropertyId(organizationId!, propertyId as string);
+  const { isLoading, error, data } = useQueryVisitsByPropertyId(propertyId as string, range, filter);
 
   if (isLoading)
     return <Box>Loading...</Box>;

@@ -19,13 +19,12 @@ import { getPropertyStatusColor } from '../../../../../../../features/properties
 import { BasicBreadcrumbs } from '../../../../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
 import Divider from '@mui/material/Divider';
 import { CheckedInRow } from '../../../../../../../features/access-protect/components/visits/checked-in-row.tsx';
-import { useOrganizationStore } from '../../../../../../../features/user-management/state/client/store.ts';
 
 export const VisitPage = () => {
-  const { organizationId } = useOrganizationStore();
+  // const { organizationId } = useOrganizationStore();
   const { propertyId, visitId } = useParams();
 
-  const { isLoading, error, data } = useQueryVisit(organizationId!, propertyId as string, visitId as string);
+  const { isLoading, error, data } = useQueryVisit(propertyId as string, visitId as string);
 
   const checkedOutContent = (visit: VisitModel) => {
     if (visit.leftAt) {

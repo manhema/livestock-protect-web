@@ -44,9 +44,14 @@ export const SiteModel = z.object({
     }).optional(),
   }).optional(),
 }).transform((site) => {
-  const areaId = site.area?.id ?? '';
-  const unitId = site.unit?.id ?? '';
-  const id = [site.type,site.property.id, areaId, unitId].filter(Boolean).join(':'); // e.g., "unit:prop123:area456:unit789" or "prop123:area456"
+  let id = ['property',site.property.id].filter(Boolean).join(':'); // e.g., "property:123"
+
+  if (site.type === 'unit') {
+    id = site.unit?.id ?? '';
+  }else if (site.type === 'area') {
+    id = site.area?.id ?? '';
+  }
+
   return { id, ...site };
 });
 

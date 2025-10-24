@@ -1,24 +1,17 @@
 import { MovementReport } from './models/movement-report-model.ts';
-import { _get, _post, _put } from '../../../core/services/api/api-client.ts';
-import { MovementFilterRequest } from '../types/requests.ts';
+import { _get, _post } from '../../../core/services/api/api-client.ts';
+import { MovementFilterRequest, VisitFilterRequest } from '../types/requests.ts';
 import type { DateTimeRange } from '../types';
 import { VisitModel } from './models/visit-model.ts';
 import { PropertyModel } from '../../properties/services/models/property-model.ts';
-import  { SiteModel } from './models/site-model.ts';
+import { SiteModel } from './models/site-model.ts';
 import dayjs from 'dayjs';
-
-export interface IVisitorFilter {
-  name: string;
-  email: string;
-  phone: string;
-}
-export interface IMovementsFilter {
-  visitors: IVisitorFilter[];
-  vehicles: string[];
-  sites: string[];
-}
+import { apiInstance } from '../../../core/services/api/api-instance.ts';
+import type { IMovementsFilter, IVisitsFilter } from './filters';
 
 export class AccessProtectServices {
+  private api = apiInstance;
+
   private constructFilters = (range: DateTimeRange, filter?: IMovementsFilter): MovementFilterRequest => {
     const [start, end] = range;
     const data: any = {
@@ -57,14 +50,40 @@ export class AccessProtectServices {
 
   };
 
-  getVisitsByPropertyId = async (organizationId: string, propertyId: string) : Promise<VisitModel[]> => {
-    const response = await _get(
-      `/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs`);
+  getVisitsByPropertyId = async (propertyId: string, range: DateTimeRange, filter?: IVisitsFilter) : Promise<VisitModel[]> => {
+    const constructWithFilters  = (): MovementFilterRequest => {
+      const [start, end] = range;
+      const data: any = {
+        startDate: start?.toDate(),
+        endDate: end?.toDate(),
+      };
+
+      const sites = filter?.sites.map((id) =>
+        id.replace(/^(property:|unit:|area:)/, ''),
+      );
+
+      if (filter) {
+        return VisitFilterRequest.parse({
+          ...data,
+          ...filter,
+          sites,
+        });
+      }
+
+      return VisitFilterRequest.parse(data);
+    };
+
+    const request = constructWithFilters();
+
+    const response = await this.api.post(
+      `/accessprotect/api/v1/properties/${propertyId}/visits/search`,
+      request,
+    );
     return response['data'].map((value: any) => VisitModel.parse(value));
   };
 
-  getVisit = async (organizationId: string, propertyId: string, visitId: string) : Promise<VisitModel> => {
-    const response = await _get(`/accessprotect/api/v1/organizations/${organizationId}/properties/${propertyId}/access-logs/${visitId}`);
+  getVisit = async (propertyId: string, visitId: string) : Promise<VisitModel> => {
+    const response = await this.api.get(`/accessprotect/api/v1/properties/${propertyId}/visits/${visitId}`);
 
     return VisitModel.parse(response['data']);
   };
@@ -74,8 +93,8 @@ export class AccessProtectServices {
     return response['data'].map((value: any) => SiteModel.parse(value));
   };
 
-  async checkOutVisitor(propertyId: string, logId: string, datetime: dayjs.Dayjs): Promise<void> {
-    const response = await _put(`/accessprotect/powersync/api/v1/properties/${propertyId}/access-logs/${logId}/checkout`,
+  async checkOutVisitor(propertyId: string, visitId: string, datetime: dayjs.Dayjs): Promise<void> {
+    const response = await this.api.put(`/accessprotect/api/v1/properties/${propertyId}/visits/${visitId}/checkout`,
       {
         leftAt: datetime.toISOString(),
       },

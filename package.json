@@ -23,6 +23,7 @@
     "@tanstack/react-query": "^5.81.5",
     "@vis.gl/react-google-maps": "^1.5.4",
     "autosuggest-highlight": "^3.3.4",
+    "axios": "^1.12.2",
     "chart.js": "^4.5.0",
     "dayjs": "^1.11.13",
     "firebase": "^11.10.0",
