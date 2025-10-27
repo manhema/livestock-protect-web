@@ -17,7 +17,6 @@ import {
 import {
   MovementsFilterPanel,
 } from '../../../features/access-protect/components/maps/map-controls/movements-filter-panel.tsx';
-import type { IMovementsFilter } from '../../../features/access-protect/services/access-protect-services.ts';
 import {
   useQueryAccessProtectProperties,
   useQueryOrganizationMovements,
@@ -38,6 +37,7 @@ import {
   AccessProtectFullScreenMapControls,
 } from '../../../features/access-protect/components/maps/map-controls/access-protect-fullscreen-map-controls.tsx';
 import { AlertsStatistics } from '../../../features/access-protect/components/dashboard/alerts-statistics.tsx';
+import type { IMovementsFilter } from '../../../features/access-protect/services/filters';
 
 interface AccessProtectDashboardProps {
   properties: PropertyModel[];

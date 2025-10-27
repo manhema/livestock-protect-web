@@ -1,12 +1,10 @@
 import React, { type FC, Fragment, useState } from 'react';
-import { Box, Button, InputAdornment, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import type { VisitModel } from '../../../services/models/visit-model.ts';
 import type { SiteModel } from '../../../services/models/site-model.ts';
 import { VisitsSiteFilter } from './visits-site-filter/visits-site-filter.tsx';
 import { useToggleSelection } from '../../maps/map-controls/hooks/use-toggle-selection.ts';
 import { VisitsSelectedEntitiesPanel } from './visits-selected-entities/visits-selected-entities-panel.tsx';
-import SearchIcon from '@mui/icons-material/Search';
-import Divider from '@mui/material/Divider';
 import type { IVisitorFilter, IVisitsFilter } from '../../../services/filters';
 
 
@@ -98,32 +96,35 @@ export const VisitsFilterPanel: FC<VisitsFilterPanel> = ({ visits, sites, filter
 
   return (
     <Fragment>
-      <TextField
-        variant="outlined"
-        size="small"
-        // label="Controlled"
-        placeholder="Keywords..."
-        value={inputValue}
-        fullWidth
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setInputValue(event.target.value);
-        }}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <React.Fragment>
-                {/*{params.InputProps.endAdornment}*/}
-              </React.Fragment>
-            ),
-          },
-        }}
-      />
-      <Divider sx={{ my:2 }} />
+      {/*
+      <Fragment>
+        <TextField
+          variant="outlined"
+          size="small"
+          // label="Controlled"
+          placeholder="Keywords..."
+          value={inputValue}
+          fullWidth
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setInputValue(event.target.value);
+          }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon fontSize="small" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <React.Fragment>
+                </React.Fragment>
+              ),
+            },
+          }}
+        />
+        <Divider sx={{ my:2 }} />
+      </Fragment>
+      */}
 
       {/*<VisitorFilter*/}
       {/*  visitors={visitors}*/}

@@ -26,15 +26,20 @@ import {
 } from '../../../../../../features/access-protect/components/visits/filters/visits-filter-panel.tsx';
 import type { VisitModel } from '../../../../../../features/access-protect/services/models/visit-model.ts';
 import type { IVisitsFilter } from '../../../../../../features/access-protect/services/filters';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
+import LinearProgress from '@mui/material/LinearProgress';
 
 interface FiltersToolboxProps {
+  isLoading: boolean;
   visits: VisitModel[];
   sites: SiteModel[];
   filter: IVisitsFilter | undefined;
   onFilterChange: (filter: IVisitsFilter | undefined) => void;
   onClose: () => void;
 }
-const FiltersToolbox: FC<FiltersToolboxProps> = ({ visits, sites, filter, onFilterChange, onClose }) => {
+const FiltersToolbox: FC<FiltersToolboxProps> = ({ isLoading, visits, sites, filter, onFilterChange, onClose }) => {
   return (
     <Fragment>
       <>
@@ -61,6 +66,7 @@ const FiltersToolbox: FC<FiltersToolboxProps> = ({ visits, sites, filter, onFilt
             </IconButton>
           </Stack>
           <Divider sx={{ my:2 }} />
+          {isLoading && (<LinearProgress variant="indeterminate" sx={{ width: '100%', mb: 1 }} />)}
 
           <VisitsFilterPanel
             visits={visits}
@@ -138,131 +144,163 @@ const VisitsData: FC<VisitsDataProps> = ({ propertyId, sites }) => {
   const [range, setRange] = useState<[Dayjs | null, Dayjs | null]>([dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')]);
   const [filter, setFilter] = useState<IVisitsFilter | undefined>();
 
+  const { isLoading, error, data, fetchNextPage, hasNextPage, isFetchingNextPage } = useQueryVisitsByPropertyId(propertyId as string, range, 10, filter);
 
-  const { isLoading, error, data } = useQueryVisitsByPropertyId(propertyId as string, range, filter);
+  const fetchMore = () => {
+    if (isFetchingNextPage) {
+      return (
+        <Box sx={{ my: 2 }} textAlign="center">
+          <CircularProgress />
+        </Box>
+      );
+    }
 
-  if (isLoading)
-    return <Box>Loading...</Box>;
+    if (hasNextPage) {
+      return (
+        <Box textAlign="center">
+          <Button
+            onClick={() => fetchNextPage()}
+          >
+            Load More
+          </Button>
+        </Box>
+      );
+    }
 
-  if (error)
-    return <Box>{JSON.stringify(error)}</Box>;
+    return <Fragment />;
+  };
 
-  if (data) {
-    return (
-      <Box>
-        <BasicBreadcrumbs
-          label={'Visits'}
-          links={[
-            {
-              name: 'AP',
-              href: '/access/protect/dashboard',
-            },
-            {
-              name: 'Properties',
-              href: '/access/protect/properties',
-            },
-            {
-              name: 'Property',
-              href: `/access/protect/properties/${propertyId}`,
-            },
-          ]}
-        />
 
-        <Container
-          disableGutters={true}
-          maxWidth={false}
-          sx={{ p:2 }}
+  const visits = data?.pages.flatMap((page) => page);
+
+  return (
+    <Box>
+      <BasicBreadcrumbs
+        label={'Visits'}
+        links={[
+          {
+            name: 'AP',
+            href: '/access/protect/dashboard',
+          },
+          {
+            name: 'Properties',
+            href: '/access/protect/properties',
+          },
+          {
+            name: 'Property',
+            href: `/access/protect/properties/${propertyId}`,
+          },
+        ]}
+      />
+
+      <Container
+        disableGutters={true}
+        maxWidth={false}
+        sx={{ p:2 }}
+      >
+        <Grid container spacing={2}
+          sx={{
+            my:1,
+            flexWrap: { xs: 'wrap', md: 'nowrap' },
+          }}
         >
-          <Grid container spacing={2}
-            sx={{
-              my:1,
-              flexWrap: { xs: 'wrap', md: 'nowrap' },
+          <Grid
+            size={{
+              xs: 12,
+              ...(sidecar.open ? { md: 8, lg: 9 } : { md: 12 }),
             }}
           >
-            <Grid
-              size={{
-                xs: 12,
-                ...(sidecar.open ? { md: 8, lg: 9 } : { md: 12 }),
-              }}
-            >
-              {/*  Date & Filter Panel  */}
-              <Grid container spacing={2} sx={{ my:0 }}>
-                <Grid size={{ sm: 3, md: 3 }}>
-                  <DateRangePicker value={range} onChange={setRange} />
-                </Grid>
-                <Grid size={{ sm: 5, md: 5 }}>
-                </Grid>
-                <Grid
-                  size={{ sm: 4, md: 4 }}
-                  sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
-                >
-                  <IconButton
-                    onClick={() => {
-                      setSidecar((prev) => {
-                        const open = !(prev.open && prev.toolbox === 'sites');
-                        return { open, toolbox: 'sites' };
-                      });
-                    }}
-                  >
-                    <SettingsOutlinedIcon />
-                  </IconButton>
-                  <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-                  <IconButton
-                    onClick={() => {
-                      setSidecar((prev) => {
-                        const open = !(prev.open && prev.toolbox === 'filters');
-                        return { open, toolbox: 'filters' };
-                      });
-                    }}
-                  >
-                    <TuneIcon />
-                  </IconButton>
-                </Grid>
+            {/*  Date & Filter Panel  */}
+            <Grid container spacing={2} sx={{ my:0 }}>
+              <Grid size={{ sm: 4, md: 4 }}>
+                <DateRangePicker value={range} onChange={setRange} />
               </Grid>
-              <Divider sx={{ my:2 }} />
-
-              {
-                data.map((visit) => (
-                  <VisitorListItem key={visit.id} visit={visit}/>
-                ))
-              }
+              <Grid size={{ sm: 4, md: 4 }}>
+              </Grid>
+              <Grid
+                size={{ sm: 4, md: 4 }}
+                sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+              >
+                <Button
+                  type="button"
+                  size="small"
+                  variant="contained"
+                  sx={{ my: 0, mx: 1, fontSize: '75%' }}
+                  // onClick={handleOpen}
+                >
+                  <small>Export</small>
+                </Button>
+                <IconButton
+                  onClick={() => {
+                    setSidecar((prev) => {
+                      const open = !(prev.open && prev.toolbox === 'sites');
+                      return { open, toolbox: 'sites' };
+                    });
+                  }}
+                >
+                  <SettingsOutlinedIcon />
+                </IconButton>
+                <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+                <IconButton
+                  onClick={() => {
+                    setSidecar((prev) => {
+                      const open = !(prev.open && prev.toolbox === 'filters');
+                      return { open, toolbox: 'filters' };
+                    });
+                  }}
+                >
+                  <TuneIcon />
+                </IconButton>
+              </Grid>
             </Grid>
+            <Divider sx={{ my:2 }} />
+            {isLoading && (<LinearProgress variant="indeterminate" sx={{ width: '100%' }} />)}
 
-            {sidecar.open && sidecar.toolbox === 'sites' && (
-              <>
-                <SitesToolbox
-                  sites={sites}
-                  onClose={() => {
-                    setSidecar({ open: false, toolbox: 'sites' });
+            {error && <Alert sx={{ mb: 2 }} data-testid="error-message" severity="error">Something went wrong</Alert>}
 
-                  }}
-
-                />
-              </>
-            )}
-
-            {sidecar.open && sidecar.toolbox === 'filters' && (
-              <>
-                <FiltersToolbox
-                  visits={data}
-                  sites={sites}
-                  filter={filter}
-                  onFilterChange={(_filter) => {
-                    setFilter(_filter);
-                  }}
-                  onClose={() => {
-                    setSidecar({ open: false, toolbox: 'filters' });
-                  }}
-                />
-              </>
-            )}
+            {
+              visits?.map((visit) => (
+                <VisitorListItem key={visit.id} visit={visit}/>
+              ))
+            }
           </Grid>
 
+          {sidecar.open && sidecar.toolbox === 'sites' && (
+            <>
+              <SitesToolbox
+                sites={sites}
+                onClose={() => {
+                  setSidecar({ open: false, toolbox: 'sites' });
 
-        </Container>
-      </Box>
-    );
-  }
+                }}
+
+              />
+            </>
+          )}
+
+          {sidecar.open && sidecar.toolbox === 'filters' && (
+            <>
+              <FiltersToolbox
+                isLoading={isLoading}
+                visits={visits ?? []}
+                sites={sites}
+                filter={filter}
+                onFilterChange={(_filter) => {
+                  setFilter(_filter);
+                }}
+                onClose={() => {
+                  setSidecar({ open: false, toolbox: 'filters' });
+                }}
+              />
+            </>
+          )}
+        </Grid>
+
+        {fetchMore()}
+      </Container>
+    </Box>
+  );
+
 
   return (
     <Fragment>

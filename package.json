@@ -25,6 +25,7 @@
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.12.2",
     "chart.js": "^4.5.0",
+    "dateformat": "^5.0.3",
     "dayjs": "^1.11.13",
     "firebase": "^11.10.0",
     "fuse.js": "^7.1.0",

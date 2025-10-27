@@ -19,6 +19,8 @@ import { getPropertyStatusColor } from '../../../../../../../features/properties
 import { BasicBreadcrumbs } from '../../../../../../../shared/components/breadcrumbs/basic-breadcrumbs.tsx';
 import Divider from '@mui/material/Divider';
 import { CheckedInRow } from '../../../../../../../features/access-protect/components/visits/checked-in-row.tsx';
+import { EmployeeCard } from '../../../../../../../features/access-protect/components/visits/cards/employee-card.tsx';
+import { CompanyCard } from '../../../../../../../features/access-protect/components/visits/cards/company-card.tsx';
 
 export const VisitPage = () => {
   // const { organizationId } = useOrganizationStore();
@@ -112,10 +114,11 @@ export const VisitPage = () => {
 
           {checkedOutContent(data)}
 
-
           <UserCard user={data.user} />
           {data.vehicleRegNo && <VehicleCard vehicleRegNo={data.vehicleRegNo} />}
           <ReasonCard reason={data.reason} />
+          {data.employee && <EmployeeCard employee={data.employee} />}
+          {data.company && <CompanyCard company={data.company} />}
           <QuestionnaireAnswersCard questionnaire={data.questionnaire} />
         </Container>
       </Box>

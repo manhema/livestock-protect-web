@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { AccessProtectServices, type IMovementsFilter } from '../../services/access-protect-services.ts';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { AccessProtectServices } from '../../services/access-protect-services.ts';
 import type { DateTimeRange } from '../../types';
-import type { IVisitsFilter } from '../../services/filters';
+import type { IMovementsFilter, IVisitsFilter } from '../../services/filters';
 
 const datasource = new AccessProtectServices();
 
@@ -27,23 +27,23 @@ export const useQueryOrganizationMovements = (range: DateTimeRange, filter?: IMo
   });
 };
 
-export const useQueryOrganizationMovementsByPropertyId = (propertyId: string, range: DateTimeRange, filter?: IMovementsFilter) => {
-  return useQuery({
-    queryKey: ['queryOrganizationMovementsByPropertyId', propertyId, range, filter],
-    queryFn: async () => {
-      return await datasource.getOrganizationMovementsByPropertyId(propertyId, range, filter);
+export const useQueryVisitsByPropertyId = (propertyId: string, range: DateTimeRange, limit: number, filter?: IVisitsFilter) => {
+  return useInfiniteQuery({
+    queryKey: ['queryVisitsByPropertyId', propertyId, range, filter],
+    initialPageParam: 1, // Initial page offset/page number
+    queryFn: async ({ pageParam }: { pageParam: number }) => {
+      const pagination = { offset: pageParam, limit: limit };
+      return await datasource.getVisitsByPropertyId(propertyId, range, pagination, filter);
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const morePagesExist = lastPage.length === limit;
+      const nextPage = allPages.length; // offset starts at 1, so we can use allPages.length instead of allPages.length + 1
+      return morePagesExist ? nextPage : undefined; // Return next offset if more pages exist
     },
   });
 };
 
-export const useQueryVisitsByPropertyId = (propertyId: string, range: DateTimeRange, filter?: IVisitsFilter) => {
-  return useQuery({
-    queryKey: ['queryVisitsByPropertyId', propertyId, range, filter],
-    queryFn: async () => {
-      return await datasource.getVisitsByPropertyId(propertyId, range, filter);
-    },
-  });
-};
+
 
 export const useQueryVisit = (propertyId: string, visitId: string) => {
   return useQuery({

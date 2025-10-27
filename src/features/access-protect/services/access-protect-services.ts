@@ -7,7 +7,16 @@ import { PropertyModel } from '../../properties/services/models/property-model.t
 import { SiteModel } from './models/site-model.ts';
 import dayjs from 'dayjs';
 import { apiInstance } from '../../../core/services/api/api-instance.ts';
-import type { IMovementsFilter, IVisitsFilter } from './filters';
+import type { IMovementsFilter, IPagination, IVisitsFilter } from './filters';
+import dateFormat from 'dateformat';
+
+export function formatDate(
+  date: string | number | Date | undefined,
+  options: { format: string } = { format: 'dS mmmm yyyy' }) {
+  return dateFormat(date, options.format);
+}
+
+
 
 export class AccessProtectServices {
   private api = apiInstance;
@@ -50,7 +59,7 @@ export class AccessProtectServices {
 
   };
 
-  getVisitsByPropertyId = async (propertyId: string, range: DateTimeRange, filter?: IVisitsFilter) : Promise<VisitModel[]> => {
+  getVisitsByPropertyId = async (propertyId: string, range: DateTimeRange, pagination: IPagination, filter?: IVisitsFilter) : Promise<VisitModel[]> => {
     const constructWithFilters  = (): MovementFilterRequest => {
       const [start, end] = range;
       const data: any = {
@@ -74,9 +83,13 @@ export class AccessProtectServices {
     };
 
     const request = constructWithFilters();
+    const params = new URLSearchParams();
+
+    params.append('page', pagination.offset.toString());
+    params.append('size', pagination.limit.toString());
 
     const response = await this.api.post(
-      `/accessprotect/api/v1/properties/${propertyId}/visits/search`,
+      `/accessprotect/api/v1/properties/${propertyId}/visits/search?${params.toString()}`,
       request,
     );
     return response['data'].map((value: any) => VisitModel.parse(value));
@@ -107,4 +120,16 @@ export class AccessProtectServices {
 
     console.log(response);
   }
+
+  exportVisitsByPropertyId = async (propertyId: string, range: DateTimeRange, pagination: IPagination, filter?: IVisitsFilter) : Promise<any> => {
+    const response = await this.api.get(`/accessprotect/api/v1/properties/${propertyId}/access-logs/export`,{
+      responseType: 'blob',
+    });
+
+    const filename = `Visitor Logs [${formatDate(Date(), { format: 'yyyy/mm/dd' })}].csv`;
+
+    return { blob: response.data as Blob, filename: filename };
+  };
 }
+
+
