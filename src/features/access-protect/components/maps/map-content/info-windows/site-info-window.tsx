@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { InfoWindow } from '@vis.gl/react-google-maps';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import { SiteVisitsList } from './site-visit-list.tsx';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 interface SiteInfoWindowProps {
   selectedSite?: any;
@@ -53,7 +53,7 @@ export const SiteInfoWindow: FC<SiteInfoWindowProps> = ({ selectedSite, property
             variant="outlined"
             // href={`/access-control/access-logs/${selectedSite.id}/dashboard`}
             onClick={
-              () => navigate(`/access/protect/${selectedSite.id}`)
+              () => navigate({ to: `/access/protect/${selectedSite.id}` })
             }
           >
             View Property Movements

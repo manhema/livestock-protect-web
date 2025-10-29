@@ -121,15 +121,15 @@ export class AccessProtectServices {
     console.log(response);
   }
 
-  exportVisitsByPropertyId = async (propertyId: string, range: DateTimeRange, pagination: IPagination, filter?: IVisitsFilter) : Promise<any> => {
-    const response = await this.api.get(`/accessprotect/api/v1/properties/${propertyId}/access-logs/export`,{
-      responseType: 'blob',
-    });
-
-    const filename = `Visitor Logs [${formatDate(Date(), { format: 'yyyy/mm/dd' })}].csv`;
-
-    return { blob: response.data as Blob, filename: filename };
-  };
+  // exportVisitsByPropertyId = async (propertyId: string, range: DateTimeRange, pagination: IPagination, filter?: IVisitsFilter) : Promise<any> => {
+  //   const response = await this.api.get(`/accessprotect/api/v1/properties/${propertyId}/access-logs/export`,{
+  //     responseType: 'blob',
+  //   });
+  //
+  //   const filename = `Visitor Logs [${formatDate(Date(), { format: 'yyyy/mm/dd' })}].csv`;
+  //
+  //   return { blob: response.data as Blob, filename: filename };
+  // };
 }
 
 

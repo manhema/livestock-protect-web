@@ -1,9 +1,10 @@
-import { AppRoutes } from './app-routes.tsx';
 import { QueryClientProviderState } from '../core/query-client-provider-state.tsx';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from '../core/themes/theme.ts';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { config } from '../core/config/config.ts';
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from '../router.tsx';
 
 const App = () => {
   const libraries = ['places', 'drawing'];
@@ -13,7 +14,8 @@ const App = () => {
       <APIProvider apiKey={config.googleMapsApi.apiKey} libraries={libraries}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppRoutes/>
+          {/*<AppRoutes/>*/}
+          <RouterProvider router={router} />
         </ThemeProvider>
       </APIProvider>
     </QueryClientProviderState>

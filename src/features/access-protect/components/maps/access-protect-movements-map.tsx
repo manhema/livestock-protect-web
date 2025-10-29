@@ -12,7 +12,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { InfoWindows } from './map-content/info-windows/info-windows.tsx';
 import { SiteMarkers } from './map-content/site-markers/site-markers.tsx';
 import { MovementPaths } from './map-content/movement-paths/movement-paths.tsx';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { ControlPosition, MapControl } from '@vis.gl/react-google-maps';
 import { useFullscreen } from '../../../../shared/utils/hooks/use-fullscreen-hook.ts';
 import { MapPortalContext } from '../../utils/context/portal-context.tsx';
@@ -190,7 +190,7 @@ export const AccessProtectMovementsMap: FC<AccessProtectMovementsMapProps> = ({ 
                     <IconButton
                       // href="/access-control/dashboard"
                       onClick={
-                        () => navigate('/access/protect')
+                        () => navigate({ to: '/access/protect' })
                       }
                       sx={{
                         'bgcolor': 'white',

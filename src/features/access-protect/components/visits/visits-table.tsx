@@ -5,7 +5,7 @@ import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 interface VisitsTableProps {
   visits: VisitModel[];
@@ -73,7 +73,7 @@ export const VisitsTable: FC<VisitsTableProps> = ({ visits }) => {
             variant="contained"
             size="small"
             disableElevation
-            onClick={() => navigate(`/access/protect/${params.row.property.id}/visits/${params.row.id}`)}
+            onClick={() => navigate({ to: `/access/protect/${params.row.property.id}/visits/${params.row.id}` })}
           >
             View
           </Button>

@@ -5,7 +5,7 @@ import Link from '@mui/material/Link';
 // import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import type { FC } from 'react';
-import {  useNavigate } from 'react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 interface ILink {
   name: string;
@@ -29,8 +29,7 @@ export const BasicBreadcrumbs: FC<BasicBreadcrumbsProps> = ({ label, links }) =>
               underline="hover"
               color="inherit"
               sx={{ cursor: 'pointer' }}
-              // to={link.href}
-              onClick={() => navigate(link.href)}
+              onClick={() => navigate({ to: link.href })}
             >
               {link.name}
             </Link>

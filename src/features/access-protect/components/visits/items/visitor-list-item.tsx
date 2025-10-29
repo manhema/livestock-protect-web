@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 dayjs.extend(durationPlugin);
 
@@ -175,7 +175,7 @@ export const VisitorListItem : FC<VisitorListItemProps>= ({ visit }) => {
 
                 <IconButton
                   onClick={() => {
-                    navigate(`/access/protect/properties/${visit.property.id}/visits/${visit.id}`);
+                    navigate({ to: `/access/protect/properties/${visit.property.id}/visits/${visit.id}` });
                   }}
                 >
                   <VisibilityOutlinedIcon fontSize={'small'} />

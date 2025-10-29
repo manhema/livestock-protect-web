@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { getPropertyStatusColor } from '../utils/property-helper.ts';
 import { Box, Button, CardContent, Stack, Typography } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '@tanstack/react-router';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Divider from '@mui/material/Divider';
@@ -73,7 +73,7 @@ export const AccessProtectPropertyListItem : FC<AccessProtectListItemProps>= ({ 
 
               <IconButton
                 onClick={() => {
-                  navigate(`/access/protect/properties/${property.id}`);
+                  navigate({ to: `/access/protect/properties/${property.id}` });
                 }}
               >
                 <DashboardIcon fontSize={'small'} />
@@ -82,7 +82,7 @@ export const AccessProtectPropertyListItem : FC<AccessProtectListItemProps>= ({ 
 
               <IconButton
                 onClick={() => {
-                  navigate(`/access/protect/properties/${property.id}/visits`);
+                  navigate({ to: `/access/protect/properties/${property.id}/visits` });
                 }}
               >
                 <VisibilityOutlinedIcon fontSize={'small'} />
@@ -169,7 +169,7 @@ export const AccessProtectPropertyPolicyListItem : FC<AccessProtectPropertyPolic
                 <IconButton
                   disabled
                   onClick={() => {
-                    navigate(`/access/protect/properties/${property.propertyId}`);
+                    navigate({ to:`/access/protect/properties/${property.propertyId}` });
                   }}
                 >
                   <DashboardIcon fontSize={'small'} />
@@ -179,7 +179,7 @@ export const AccessProtectPropertyPolicyListItem : FC<AccessProtectPropertyPolic
                 <IconButton
                   disabled
                   onClick={() => {
-                    navigate(`/access/protect/properties/${property.propertyId}/visits`);
+                    navigate({ to:`/access/protect/properties/${property.propertyId}/visits` });
                   }}
                 >
                   <VisibilityOutlinedIcon fontSize={'small'} />
