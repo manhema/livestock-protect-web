@@ -1,9 +1,0 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
-import { LoginPage } from '../app/pages/login-page.tsx';
-
-export const Route = createFileRoute('/login/login')({
-  beforeLoad: ({ context, search }) => {
-    if (context.auth.user) throw redirect({ to: search?.redirect ?? '/' });
-  },
-  component: LoginPage,
-});
